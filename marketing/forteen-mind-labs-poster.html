@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forteen Mind Labs - Announcement Poster</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --terracotta: #E07A5F;
+            --clay: #D4A574;
+            --sage: #81B29A;
+            --soft-sage: #A8DADC;
+            --gold: #F2CC8F;
+            --warm-white: #FAF9F6;
+            --warm-beige: #E8DED2;
+            --soft-gray: #6C757D;
+        }
+
+        body {
+            font-family: 'Sora', sans-serif;
+            background: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .poster-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            max-width: 1400px;
+        }
+
+        .format-label {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+
+        /* Square Format - Instagram, Social */
+        .poster-square {
+            width: 1080px;
+            height: 1080px;
+            background: linear-gradient(135deg, var(--terracotta) 0%, var(--clay) 100%);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        /* Landscape Format - Website Hero */
+        .poster-landscape {
+            width: 1200px;
+            height: 630px;
+            background: linear-gradient(135deg, var(--terracotta) 0%, var(--clay) 100%);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        /* Story Format - Instagram/FB Stories */
+        .poster-story {
+            width: 1080px;
+            height: 1920px;
+            background: linear-gradient(180deg, var(--terracotta) 0%, var(--clay) 100%);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        /* Common Poster Styles */
+        .poster {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px;
+            text-align: center;
+            color: white;
+        }
+
+        .poster-story {
+            padding: 120px 60px;
+        }
+
+        /* Background Pattern */
+        .bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
+        }
+
+        /* Content Layer */
+        .content {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+        }
+
+        /* Logo */
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            opacity: 0.95;
+        }
+
+        .logo-sub {
+            font-size: 18px;
+            font-weight: 400;
+            letter-spacing: 5px;
+            margin-bottom: 60px;
+            opacity: 0.9;
+        }
+
+        .poster-story .logo {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .poster-story .logo-sub {
+            font-size: 24px;
+            margin-bottom: 100px;
+        }
+
+        /* Main Headline */
+        .headline {
+            font-size: 72px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 40px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .poster-landscape .headline {
+            font-size: 64px;
+            margin-bottom: 30px;
+        }
+
+        .poster-story .headline {
+            font-size: 96px;
+            margin-bottom: 60px;
+        }
+
+        /* Tagline */
+        .tagline {
+            font-size: 28px;
+            font-weight: 400;
+            line-height: 1.5;
+            margin-bottom: 50px;
+            opacity: 0.95;
+            font-style: italic;
+            max-width: 800px;
+        }
+
+        .poster-landscape .tagline {
+            font-size: 24px;
+            margin-bottom: 35px;
+        }
+
+        .poster-story .tagline {
+            font-size: 36px;
+            margin-bottom: 80px;
+            max-width: 100%;
+        }
+
+        /* Divider */
+        .divider {
+            width: 120px;
+            height: 3px;
+            background: rgba(255,255,255,0.5);
+            margin: 0 auto 40px;
+        }
+
+        .poster-story .divider {
+            width: 150px;
+            height: 4px;
+            margin-bottom: 60px;
+        }
+
+        /* Subtitle */
+        .subtitle {
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 50px;
+            opacity: 0.9;
+        }
+
+        .poster-landscape .subtitle {
+            font-size: 20px;
+            margin-bottom: 35px;
+        }
+
+        .poster-story .subtitle {
+            font-size: 28px;
+            margin-bottom: 70px;
+        }
+
+        /* Episode Preview */
+        .episode-preview {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 30px 40px;
+            border-radius: 20px;
+            margin-bottom: 50px;
+        }
+
+        .poster-story .episode-preview {
+            padding: 50px 60px;
+            margin-bottom: 80px;
+        }
+
+        .episode-label {
+            font-size: 14px;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .poster-story .episode-label {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .episode-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .poster-landscape .episode-title {
+            font-size: 32px;
+        }
+
+        .poster-story .episode-title {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .episode-tagline {
+            font-size: 20px;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        .poster-landscape .episode-tagline {
+            font-size: 18px;
+        }
+
+        .poster-story .episode-tagline {
+            font-size: 26px;
+        }
+
+        /* CTA */
+        .cta {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            padding: 18px 45px;
+            background: white;
+            color: var(--terracotta);
+            border-radius: 50px;
+            display: inline-block;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .poster-story .cta {
+            font-size: 24px;
+            padding: 24px 60px;
+        }
+
+        /* Coming Soon Badge */
+        .badge {
+            background: var(--gold);
+            color: var(--terracotta);
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            padding: 12px 30px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .poster-story .badge {
+            font-size: 20px;
+            padding: 16px 40px;
+            margin-bottom: 60px;
+        }
+
+        /* Footer */
+        .footer {
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 16px;
+            opacity: 0.7;
+            font-style: italic;
+        }
+
+        .poster-story .footer {
+            bottom: 60px;
+            font-size: 20px;
+        }
+
+        /* Download Buttons */
+        .download-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .download-btn {
+            background: white;
+            color: #333;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-family: 'Sora', sans-serif;
+        }
+
+        .download-btn:hover {
+            background: var(--sage);
+            color: white;
+        }
+
+        @media (max-width: 1400px) {
+            .poster-square,
+            .poster-landscape,
+            .poster-story {
+                transform: scale(0.8);
+                transform-origin: top center;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .poster-square,
+            .poster-landscape,
+            .poster-story {
+                transform: scale(0.6);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="download-container">
+        <button class="download-btn" onclick="downloadPoster('square')">📥 Download Square</button>
+        <button class="download-btn" onclick="downloadPoster('landscape')">📥 Download Landscape</button>
+        <button class="download-btn" onclick="downloadPoster('story')">📥 Download Story</button>
+    </div>
+
+    <div class="poster-container">
+        <!-- SQUARE FORMAT (1080x1080) - Instagram, Facebook -->
+        <div>
+            <div class="format-label">Square Format (1080x1080) - Instagram, Facebook</div><br>
+            <div class="poster-square poster" id="poster-square">
+                <div class="bg-pattern"></div>
+                <div class="content">
+                    <div class="badge">LAUNCHING SOON</div>
+                    
+                    <div class="logo">FORTEEN</div>
+                    <div class="logo-sub">MIND LABS</div>
+                    
+                    <h1 class="headline">Understanding<br>the patterns<br>beneath behavior</h1>
+                    
+                    <div class="divider"></div>
+                    
+                    <p class="tagline">"The current was always there.<br>You just learned to call it home."</p>
+                    
+                    <div class="episode-preview">
+                        <div class="episode-label">EPISODE 1</div>
+                        <div class="episode-title">The Slot Machine Heart</div>
+                        <div class="episode-tagline">Why unpredictability feels like love</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LANDSCAPE FORMAT (1200x630) - Website, Twitter, LinkedIn -->
+        <div>
+            <div class="format-label">Landscape Format (1200x630) - Website Hero, Twitter, LinkedIn</div><br>
+            <div class="poster-landscape poster" id="poster-landscape">
+                <div class="bg-pattern"></div>
+                <div class="content">
+                    <div class="badge">LAUNCHING SOON</div>
+                    
+                    <div class="logo">FORTEEN</div>
+                    <div class="logo-sub">MIND LABS</div>
+                    
+                    <h1 class="headline">Understanding the patterns<br>beneath behavior</h1>
+                    
+                    <p class="tagline">"The current was always there. You just learned to call it home."</p>
+                    
+                    <div class="episode-preview">
+                        <div class="episode-label">EPISODE 1: THE SLOT MACHINE HEART</div>
+                        <div class="episode-tagline">Why unpredictability feels like love</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STORY FORMAT (1080x1920) - Instagram Stories, Facebook Stories -->
+        <div>
+            <div class="format-label">Story Format (1080x1920) - Instagram Stories, Facebook Stories</div><br>
+            <div class="poster-story poster" id="poster-story">
+                <div class="bg-pattern"></div>
+                <div class="content">
+                    <div class="badge">LAUNCHING SOON</div>
+                    
+                    <div class="logo">FORTEEN</div>
+                    <div class="logo-sub">MIND LABS</div>
+                    
+                    <h1 class="headline">Understanding<br>the patterns<br>beneath<br>behavior</h1>
+                    
+                    <div class="divider"></div>
+                    
+                    <p class="tagline">"The current was always there. You just learned to call it home."</p>
+                    
+                    <div class="subtitle">A new kind of micro-learning experience</div>
+                    
+                    <div class="episode-preview">
+                        <div class="episode-label">EPISODE 1</div>
+                        <div class="episode-title">The Slot Machine Heart</div>
+                        <div class="episode-tagline">Why unpredictability feels like love</div>
+                    </div>
+                    
+                    <div class="cta">Begin Your Journey</div>
+                </div>
+                
+                <div class="footer">A Forteen Studios Experience</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Note: Actual image download would require html2canvas library or server-side rendering
+        // This is a placeholder function showing the intent
+        function downloadPoster(format) {
+            alert(`In production, this would download the ${format} format poster as a high-resolution image.\n\nFor now, you can:\n1. Take a screenshot of the poster\n2. Use browser tools to save as PDF\n3. Use design software to export at exact dimensions`);
+            
+            // Show dimensions info
+            const dimensions = {
+                square: '1080x1080px (Instagram, Facebook)',
+                landscape: '1200x630px (Website, Twitter, LinkedIn)',
+                story: '1080x1920px (Instagram/Facebook Stories)'
+            };
+            
+            console.log(`Download ${format}: ${dimensions[format]}`);
+        }
+
+        // Instructions in console
+        console.log('%c📋 POSTER EXPORT INSTRUCTIONS', 'color: #E07A5F; font-size: 16px; font-weight: bold;');
+        console.log('%cTo get high-quality images:', 'color: #81B29A; font-size: 14px;');
+        console.log('1. Take screenshots at exact dimensions shown');
+        console.log('2. Use browser DevTools to set viewport to exact size');
+        console.log('3. Or use design tools (Figma, Canva) to recreate at exact specs');
+        console.log('');
+        console.log('%cDimensions:', 'color: #D4A574; font-size: 14px; font-weight: bold;');
+        console.log('Square: 1080x1080px (Instagram, Facebook)');
+        console.log('Landscape: 1200x630px (Website Hero, Twitter, LinkedIn)');
+        console.log('Story: 1080x1920px (Instagram/Facebook Stories)');
+    </script>
+</body>
+</html>
