@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Allergy to Calm | THE UNDERTOW</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(to bottom, #2d3047 0%, #4a4e69 50%, #5a5f7d 100%);
+            color: #e8dcc4;
+            line-height: 2.2;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        /* MONSOON DUSK PALETTE */
+        :root {
+            --deep-indigo: #2d3047;
+            --evening-purple: #4a4e69;
+            --soft-grey-blue: #7d8597;
+            --sunset-amber: #d4a574;
+            --rain-silver: #b8c5d6;
+            --sage-green: #8a9a7b;
+            --dusty-lavender: #b8a8c8;
+            --warm-gold: #e8d4a8;
+            --mist-white: #f5f1e8;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 40px;
+        }
+        
+        /* PROGRESS BAR */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(125, 133, 151, 0.3);
+            z-index: 100;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--sage-green), var(--dusty-lavender), var(--sunset-amber));
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        /* VOICE & SOUND TOGGLES */
+        .controls-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 101;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .toggle-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(77, 78, 105, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 12px 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(184, 168, 200, 0.3);
+        }
+        
+        .toggle-button:hover {
+            background: rgba(77, 78, 105, 0.8);
+            border-color: rgba(184, 168, 200, 0.5);
+        }
+        
+        .toggle-icon {
+            font-size: 1.1rem;
+        }
+        
+        .toggle-label {
+            font-size: 0.9rem;
+            color: var(--mist-white);
+            font-weight: 500;
+        }
+        
+        /* HEADER */
+        .episode-header {
+            text-align: center;
+            margin-bottom: 100px;
+            padding: 60px 20px;
+            opacity: 0;
+            animation: fadeIn 2s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        .series-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--sage-green);
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+        
+        .episode-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: var(--warm-gold);
+            margin-bottom: 25px;
+            line-height: 1.3;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .episode-tagline {
+            font-size: 1.4rem;
+            color: var(--dusty-lavender);
+            font-style: italic;
+            margin-top: 25px;
+            line-height: 1.8;
+        }
+        
+        /* SEGMENTS */
+        .segment {
+            margin-bottom: 120px;
+            opacity: 0;
+            display: none;
+            transition: opacity 3s ease;
+        }
+        
+        .segment.active {
+            display: block;
+            animation: gentleFadeIn 3s ease forwards;
+        }
+        
+        @keyframes gentleFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .segment-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .segment-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--rain-silver);
+            margin-bottom: 15px;
+        }
+        
+        .segment-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: var(--sunset-amber);
+            margin-bottom: 20px;
+        }
+        
+        /* NARRATION */
+        .narration {
+            font-size: 1.35rem;
+            line-height: 2.4;
+            color: var(--mist-white);
+            margin-bottom: 50px;
+            text-align: left;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .narration p {
+            margin-bottom: 35px;
+        }
+        
+        .narration em {
+            color: var(--dusty-lavender);
+            font-style: italic;
+        }
+        
+        /* VISUAL CONTAINERS */
+        .visual-container {
+            width: 100%;
+            height: 350px;
+            margin: 60px 0;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, rgba(77, 78, 105, 0.4), rgba(184, 168, 200, 0.3));
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(184, 168, 200, 0.2);
+        }
+        
+        /* SEGMENT 1: THE GATHERING - Clouds rolling */
+        .clouds-gathering {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #4a4e69, #5a5f7d);
+        }
+        
+        .cloud {
+            position: absolute;
+            background: rgba(184, 197, 214, 0.3);
+            border-radius: 100px;
+            animation: cloudMove 25s infinite ease-in-out;
+        }
+        
+        .cloud1 {
+            width: 200px;
+            height: 60px;
+            top: 20%;
+            left: -100px;
+            animation-delay: 0s;
+        }
+        
+        .cloud2 {
+            width: 160px;
+            height: 50px;
+            top: 40%;
+            left: -80px;
+            animation-delay: 5s;
+        }
+        
+        .cloud3 {
+            width: 180px;
+            height: 55px;
+            top: 60%;
+            left: -90px;
+            animation-delay: 10s;
+        }
+        
+        @keyframes cloudMove {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(calc(100vw + 200px)); }
+        }
+        
+        /* SEGMENT 2: FIRST DROPS - Rain beginning */
+        .first-drops {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #3d4159, #4a4e69);
+        }
+        
+        .raindrop {
+            position: absolute;
+            width: 2px;
+            height: 20px;
+            background: linear-gradient(to bottom, transparent, rgba(184, 197, 214, 0.6));
+            animation: dropFall 2s infinite linear;
+        }
+        
+        @keyframes dropFall {
+            0% { transform: translateY(-50px); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(400px); opacity: 0; }
+        }
+        
+        /* SEGMENT 3: STEADY RAIN - Full immersion */
+        .steady-rain {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #2d3047, #4a4e69);
+            overflow: hidden;
+        }
+        
+        .rain-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(transparent 90%, rgba(184, 197, 214, 0.1) 90%),
+                linear-gradient(90deg, transparent 90%, rgba(184, 197, 214, 0.1) 90%);
+            background-size: 20px 20px;
+            animation: rainFall 1s linear infinite;
+        }
+        
+        @keyframes rainFall {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(20px); }
+        }
+        
+        /* SEGMENT 4: EVENING CHORUS - Birds and crickets */
+        .evening-chorus {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #4a4e69, #5a5f7d, #d4a574);
+        }
+        
+        .bird {
+            position: absolute;
+            font-size: 1.2rem;
+            animation: birdFly 15s infinite ease-in-out;
+        }
+        
+        @keyframes birdFly {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(100px, -30px); }
+            50% { transform: translate(200px, 10px); }
+            75% { transform: translate(150px, -20px); }
+        }
+        
+        /* SEGMENT 5: THE CLEARING - Sunset breaking through */
+        .clearing {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                #5a5f7d 0%,
+                #7d8597 30%,
+                #d4a574 60%,
+                #e8d4a8 100%
+            );
+        }
+        
+        .sun-rays {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 120%, 
+                rgba(232, 212, 168, 0.4) 0%,
+                transparent 60%
+            );
+            animation: raysPulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes raysPulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.7; }
+        }
+        
+        /* SEGMENT 6: DUSK - Night approaching */
+        .dusk {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                #2d3047 0%,
+                #3d4159 50%,
+                #4a4e69 100%
+            );
+        }
+        
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        /* RELIEF POINT - Mid-episode pause */
+        .relief-point {
+            background: linear-gradient(135deg, rgba(77, 78, 105, 0.6), rgba(138, 154, 123, 0.4));
+            backdrop-filter: blur(10px);
+            padding: 60px 40px;
+            border-radius: 20px;
+            margin: 80px 0;
+            border: 1px solid rgba(184, 168, 200, 0.3);
+        }
+        
+        .relief-point h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--sunset-amber);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .relief-point p {
+            font-size: 1.2rem;
+            line-height: 2.2;
+            color: var(--mist-white);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .hill-imagery {
+            width: 100%;
+            height: 400px;
+            margin: 40px 0;
+            border-radius: 15px;
+            background: linear-gradient(to bottom,
+                #5a5f7d 0%,
+                #7d8597 30%,
+                #8a9a7b 60%,
+                #4a4e69 100%
+            );
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hill-layer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40%;
+            background: linear-gradient(to top, rgba(45, 48, 71, 0.8), transparent);
+            border-radius: 50% 50% 0 0;
+        }
+        
+        .mist {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, 
+                rgba(245, 241, 232, 0.1) 0%,
+                transparent 50%
+            );
+            animation: mistMove 8s ease-in-out infinite;
+        }
+        
+        @keyframes mistMove {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+        
+        /* INTERACTIVE ELEMENTS */
+        .quiz-container {
+            background: rgba(77, 78, 105, 0.4);
+            backdrop-filter: blur(10px);
+            padding: 50px 40px;
+            border-radius: 20px;
+            margin: 60px 0;
+            border: 1px solid rgba(184, 168, 200, 0.3);
+        }
+        
+        .quiz-question {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            color: var(--warm-gold);
+            margin-bottom: 35px;
+            text-align: center;
+            line-height: 1.8;
+        }
+        
+        .quiz-options {
+            display: grid;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .option-card {
+            background: rgba(184, 197, 214, 0.15);
+            padding: 25px 30px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option-card:hover {
+            background: rgba(184, 197, 214, 0.25);
+            border-color: rgba(212, 165, 116, 0.5);
+            transform: translateX(5px);
+        }
+        
+        .option-card.selected {
+            background: rgba(212, 165, 116, 0.3);
+            border-color: var(--sunset-amber);
+        }
+        
+        .option-text {
+            font-size: 1.15rem;
+            color: var(--mist-white);
+            line-height: 1.8;
+        }
+        
+        /* TEXT INPUT */
+        .text-input-container {
+            margin: 40px 0;
+        }
+        
+        .text-input-label {
+            font-size: 1.2rem;
+            color: var(--dusty-lavender);
+            margin-bottom: 20px;
+            display: block;
+            text-align: center;
+        }
+        
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 20px;
+            background: rgba(77, 78, 105, 0.4);
+            border: 1px solid rgba(184, 168, 200, 0.3);
+            border-radius: 15px;
+            color: var(--mist-white);
+            font-family: 'Crimson Text', serif;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            resize: vertical;
+            backdrop-filter: blur(5px);
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: var(--sunset-amber);
+            background: rgba(77, 78, 105, 0.5);
+        }
+        
+        textarea::placeholder {
+            color: rgba(245, 241, 232, 0.5);
+        }
+        
+        /* PRO TIPS */
+        .protip {
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.3), rgba(232, 212, 168, 0.2));
+            padding: 35px 40px;
+            border-radius: 15px;
+            margin: 50px 0;
+            border-left: 4px solid var(--sunset-amber);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        .protip.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .protip-label {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--sunset-amber);
+            margin-bottom: 15px;
+        }
+        
+        .protip-text {
+            font-size: 1.25rem;
+            color: var(--mist-white);
+            font-style: italic;
+            line-height: 1.9;
+        }
+        
+        /* NAVIGATION */
+        .navigation {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 70px;
+        }
+        
+        .nav-button {
+            padding: 18px 45px;
+            background: rgba(138, 154, 123, 0.4);
+            border: 1px solid rgba(138, 154, 123, 0.6);
+            color: var(--mist-white);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .nav-button:hover {
+            background: rgba(138, 154, 123, 0.6);
+            border-color: var(--sage-green);
+            transform: translateY(-2px);
+        }
+        
+        .nav-button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        
+        /* COMPLETION DASHBOARD */
+        .completion-dashboard {
+            text-align: center;
+            padding: 80px 40px;
+            background: rgba(77, 78, 105, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            margin-top: 60px;
+            border: 1px solid rgba(184, 168, 200, 0.3);
+        }
+        
+        .completion-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            color: var(--warm-gold);
+            margin-bottom: 30px;
+        }
+        
+        .completion-message {
+            font-size: 1.3rem;
+            color: var(--mist-white);
+            line-height: 2;
+            margin-bottom: 50px;
+        }
+        
+        .badges-collected {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin: 50px 0;
+        }
+        
+        .badge {
+            background: rgba(212, 165, 116, 0.3);
+            padding: 30px 20px;
+            border-radius: 15px;
+            border: 2px solid rgba(212, 165, 116, 0.5);
+        }
+        
+        .badge-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .badge-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: var(--sunset-amber);
+        }
+        
+        /* TRANSITION SCREEN */
+        .transition-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(45, 48, 71, 0.95), rgba(77, 78, 105, 0.95));
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+            opacity: 0;
+            transition: opacity 3s ease;
+        }
+        
+        .transition-screen.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .transition-content {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .transition-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--dusty-lavender);
+            margin-bottom: 30px;
+        }
+        
+        .continue-button {
+            padding: 18px 50px;
+            background: rgba(138, 154, 123, 0.6);
+            border: 1px solid var(--sage-green);
+            color: var(--mist-white);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .continue-button:hover {
+            background: rgba(138, 154, 123, 0.8);
+            transform: scale(1.05);
+        }
+        
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 60px 20px;
+            margin-top: 100px;
+            border-top: 1px solid rgba(184, 168, 200, 0.2);
+        }
+        
+        .footer-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            letter-spacing: 0.2em;
+            color: var(--rain-silver);
+            margin-bottom: 15px;
+        }
+        
+        .footer-copyright {
+            font-size: 0.9rem;
+            color: var(--soft-grey-blue);
+        }
+        
+        .footer-link {
+            color: var(--dusty-lavender);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: var(--sunset-amber);
+        }
+        
+        /* MOBILE RESPONSIVE */
+        @media (max-width: 768px) {
+            .container {
+                padding: 60px 25px;
+            }
+            
+            .episode-title {
+                font-size: 2.2rem;
+            }
+            
+            .segment-title {
+                font-size: 1.8rem;
+            }
+            
+            .narration {
+                font-size: 1.2rem;
+                line-height: 2.1;
+            }
+            
+            .visual-container {
+                height: 250px;
+            }
+            
+            .controls-container {
+                top: 10px;
+                right: 10px;
+            }
+            
+            .toggle-button {
+                padding: 10px 15px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+            }
+            
+            .nav-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- PROGRESS BAR -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+    <!-- CONTROLS -->
+    <div class="controls-container">
+        <div class="toggle-button" id="voiceToggle">
+            <span class="toggle-icon">🔇</span>
+            <span class="toggle-label">Voice: OFF</span>
+        </div>
+        <div class="toggle-button" id="soundToggle">
+            <span class="toggle-icon">🔇</span>
+            <span class="toggle-label">Sounds: OFF</span>
+        </div>
+    </div>
+    
+    <div class="container">
+        <!-- HEADER -->
+        <div class="episode-header">
+            <div class="series-title">THE UNDERTOW / EPISODE 3</div>
+            <h1 class="episode-title">The Allergy to Calm</h1>
+            <p class="episode-tagline">A rainy evening in the hills.<br>Notice how your body responds.</p>
+        </div>
+        
+        <!-- SEGMENT 1: THE GATHERING -->
+        <div class="segment active" id="segment1">
+            <div class="segment-header">
+                <div class="segment-number">Part One</div>
+                <h2 class="segment-title">The Gathering</h2>
+            </div>
+            
+            <div class="visual-container">
+                <div class="clouds-gathering">
+                    <div class="cloud cloud1"></div>
+                    <div class="cloud cloud2"></div>
+                    <div class="cloud cloud3"></div>
+                </div>
+            </div>
+            
+            <div class="narration">
+                <p>The clouds gather over the hills.</p>
+                
+                <p>You can smell the rain before it arrives. The air changes. Temperature drops. Light softens.</p>
+                
+                <p>This is the moment before calm.</p>
+                
+                <p>Notice your body. What does it do in moments like this?</p>
+                
+                <p>Does your hand reach for your phone? Do you think of the next thing on your list? Does stillness feel uncomfortable?</p>
+                
+                <p><em>Your nervous system was calibrated in childhood. If chaos was your baseline, this moment—right before the rain—might feel like waiting for something to go wrong.</em></p>
+                
+                <p>But what if nothing goes wrong?</p>
+                
+                <p>What if it's just... rain?</p>
+            </div>
+            
+            <div class="quiz-container">
+                <div class="quiz-question">In moments of calm, what does your body usually do?</div>
+                <div class="quiz-options">
+                    <div class="option-card" data-option="1">
+                        <div class="option-text">Reaches for phone immediately</div>
+                    </div>
+                    <div class="option-card" data-option="2">
+                        <div class="option-text">Thinks of all the things I "should" be doing</div>
+                    </div>
+                    <div class="option-card" data-option="3">
+                        <div class="option-text">Feels suspicious (waiting for other shoe to drop)</div>
+                    </div>
+                    <div class="option-card" data-option="4">
+                        <div class="option-text">Actually enjoys the stillness</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="protip" id="protip1">
+                <div class="protip-label">Pattern Recognition</div>
+                <div class="protip-text">The urge to fill silence isn't restlessness. It's your nervous system trying to maintain its familiar baseline. Calm reads as unfamiliar. Unfamiliar reads as threat.</div>
+            </div>
+            
+            <div class="navigation">
+                <button class="nav-button" onclick="nextSegment()">Continue to the Rain →</button>
+            </div>
+        </div>
+        
+        <!-- SEGMENT 2: THE FIRST DROPS -->
+        <div class="segment" id="segment2">
+            <div class="segment-header">
+                <div class="segment-number">Part Two</div>
+                <h2 class="segment-title">The First Drops</h2>
+            </div>
+            
+            <div class="visual-container">
+                <div class="first-drops" id="firstDropsContainer"></div>
+            </div>
+            
+            <div class="narration">
+                <p>The first drops are hesitant.</p>
+                
+                <p>One. Then another. Then a pause.</p>
+                
+                <p>Can you stay here? Or does your mind already skip ahead?</p>
+                
+                <p>The rain builds gradually. Not all at once. Pattern forming slowly.</p>
+                
+                <p><em>If you grew up in chaos, gradual feels wrong. Your body learned: Things escalate. Peace doesn't last. Better prepare.</em></p>
+                
+                <p>But this rain isn't escalating to danger. It's just becoming... rain.</p>
+                
+                <p>What if you could trust gradual?</p>
+            </div>
+            
+            <div class="quiz-container">
+                <div class="quiz-question">When things start to calm down in your life, what typically happens?</div>
+                <div class="quiz-options">
+                    <div class="option-card" data-option="1">
+                        <div class="option-text">I unconsciously create a new problem</div>
+                    </div>
+                    <div class="option-card" data-option="2">
+                        <div class="option-text">I wait anxiously for the next crisis</div>
+                    </div>
+                    <div class="option-card" data-option="3">
+                        <div class="option-text">I get restless and make impulsive changes</div>
+                    </div>
+                    <div class="option-card" data-option="4">
+                        <div class="option-text">I actually allow myself to rest</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="protip" id="protip2">
+                <div class="protip-label">Pattern Recognition</div>
+                <div class="protip-text">Sabotaging stability isn't self-destruction. It's homeostasis. Your body is trying to maintain the cortisol level it knows as "normal." Chaos feels safer than the unfamiliar territory of peace.</div>
+            </div>
+            
+            <div class="navigation">
+                <button class="nav-button" onclick="prevSegment()">← Back</button>
+                <button class="nav-button" onclick="nextSegment()">Continue →</button>
+            </div>
+        </div>
+        
+        <!-- RELIEF POINT: MID-EPISODE PAUSE -->
+        <div class="segment" id="segment3">
+            <div class="relief-point">
+                <h3>Rest Here for a Moment</h3>
+                <p>You're halfway through. Take a breath.</p>
+                <p>Notice how it feels to be in this space.<br>No urgency. No deadline. Just hills and rain.</p>
+                
+                <div class="hill-imagery">
+                    <div class="mist"></div>
+                    <div class="hill-layer"></div>
+                </div>
+                
+                <p style="margin-top: 40px;">The next part will be here when you're ready.</p>
+            </div>
+            
+            <div class="navigation">
+                <button class="nav-button" onclick="prevSegment()">← Back</button>
+                <button class="nav-button" onclick="showTransition()">Continue →</button>
+            </div>
+        </div>
+        
+        <!-- TRANSITION SCREEN -->
+        <div class="transition-screen" id="transitionScreen">
+            <div class="transition-content">
+                <p class="transition-text">Let the rain continue...</p>
+                <button class="continue-button" onclick="continueAfterTransition()">Continue</button>
+            </div>
+        </div>
+        
+        <!-- SEGMENT 4: THE STEADY RAIN -->
+        <div class="segment" id="segment4">
+            <div class="segment-header">
+                <div class="segment-number">Part Three</div>
+                <h2 class="segment-title">The Steady Rain</h2>
+            </div>
+            
+            <div class="visual-container">
+                <div class="steady-rain">
+                    <div class="rain-layer"></div>
+                </div>
+            </div>
+            
+            <div class="narration">
+                <p>This is the rain now. Full. Steady. Rhythmic.</p>
+                
+                <p>The world is softening. Edges blur. Sound becomes texture.</p>
+                
+                <p><em>This is what calm feels like.</em></p>
+                
+                <p>Not empty. Not boring. Not dead.</p>
+                
+                <p>Full. Present. Alive in a different way.</p>
+                
+                <p>If this feels flat to you—if your body is saying "This is not enough"—that's the pattern.</p>
+                
+                <p>Your nervous system is comparing this to the adrenaline, cortisol, and dopamine spikes of chaos. Of course this feels different.</p>
+                
+                <p><em>Different isn't wrong. Different is unfamiliar.</em></p>
+                
+                <p>Can you stay in the unfamiliar a little longer?</p>
+            </div>
+            
+            <div class="text-input-container">
+                <label class="text-input-label">What does "calm" feel like in your body right now?</label>
+                <textarea placeholder="Be honest. If it feels boring, say boring. If it feels suspicious, say suspicious. If it feels peaceful, say that..." id="calmFeeling"></textarea>
+            </div>
+            
+            <div class="protip" id="protip3">
+                <div class="protip-label">Pattern Recognition</div>
+                <div class="protip-text">What you call "chemistry" in relationships is often your nervous system recognizing familiar chaos. What you call "boring" might be your body experiencing safety for the first time. Stay long enough to know the difference.</div>
+            </div>
+            
+            <div class="navigation">
+                <button class="nav-button" onclick="prevSegment()">← Back</button>
+                <button class="nav-button" onclick="nextSegment()">Continue →</button>
+            </div>
+        </div>
+        
+        <!-- SEGMENT 5: THE EVENING CHORUS -->
+        <div class="segment" id="segment5">
+            <div class="segment-header">
+                <div class="segment-number">Part Four</div>
+                <h2 class="segment-title">The Evening Chorus</h2>
+            </div>
+            
+            <div class="visual-container">
+                <div class="evening-chorus" id="eveningChorusContainer"></div>
+            </div>
+            
+            <div class="narration">
+                <p>The rain continues.</p>
+                
+                <p>And within it: crickets. Birds. Rustling leaves. Distant sounds.</p>
+                
+                <p>Calm isn't silence. Calm is a different kind of symphony.</p>
+                
+                <p>The chaos you're used to is loud, demanding, urgent. It drowns out everything else.</p>
+                
+                <p><em>This—the rain, the crickets, the evening settling—is quieter. But it's not empty.</em></p>
+                
+                <p>It's full of small things. Gentle things. Things you can only hear when you're not running.</p>
+                
+                <p>If you've always equated intensity with aliveness, this might feel like numbness.</p>
+                
+                <p>It's not numbness. It's just... gentler.</p>
+            </div>
+            
+            <div class="quiz-container">
+                <div class="quiz-question">What does "boring" usually mean to you?</div>
+                <div class="quiz-options">
+                    <div class="option-card" data-option="1">
+                        <div class="option-text">Not enough intensity or excitement</div>
+                    </div>
+                    <div class="option-card" data-option="2">
+                        <div class="option-text">Nothing demanding my attention</div>
+                    </div>
+                    <div class="option-card" data-option="3">
+                        <div class="option-text">Absence of drama or urgency</div>
+                    </div>
+                    <div class="option-card" data-option="4">
+                        <div class="option-text">Actually peaceful and restful</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="protip" id="protip4">
+                <div class="protip-label">Pattern Recognition</div>
+                <div class="protip-text">If healthy relationships feel boring, it's not because they lack depth. It's because they lack the cortisol spikes your body learned to associate with love. Peace isn't boring. It's just not addictive.</div>
+            </div>
+            
+            <div class="navigation">
+                <button class="nav-button" onclick="prevSegment()">← Back</button>
+                <button class="nav-button" onclick="nextSegment()">Continue →</button>
+            </div>
+        </div>
+        
+        <!-- SEGMENT 6: THE CLEARING -->
+        <div class="segment" id="segment6">
+            <div class="segment-header">
+                <div class="segment-number">Part Five</div>
+                <h2 class="segment-title">The Clearing</h2>
+            </div>
+            
+            <div class="visual-container">
+                <div class="clearing">
+                    <div class="sun-rays"></div>
+                </div>
+            </div>
+            
+            <div class="narration">
+                <p>The rain slows.</p>
+                
+                <p>Clouds part. Light breaks through.</p>
+                
+                <p>Amber. Gold. Purple.</p>
+                
+                <p>Your body asks: <em>What's next? When does it go wrong?</em></p>
+                
+                <p>This is the moment where many people sabotage. When things clear, when peace arrives, the nervous system panics.</p>
+                
+                <p>"This can't last. Better prepare. Better create the familiar crisis now before it creates itself."</p>
+                
+                <p>But what if nothing goes wrong?</p>
+                
+                <p>What if the clearing is just... the clearing?</p>
+                
+                <p><em>What if calm can last longer than you think?</em></p>
+            </div>
+            
+            <div class="quiz-container">
+                <div class="quiz-question">When was the last time you let something stay calm without interfering?</div>
+                <div class="text-input-container" style="margin-top: 30px;">
+                    <textarea placeholder="A relationship, a weekend, a project... or can't remember when..." id="lastCalm"></textarea>
+                </div>
+            </div>
+            
+            <div class="protip" id="protip5">
+                <div class="protip-label">Pattern Recognition</div>
+                <div class="protip-text">The urge to sabotage calm isn't cruelty toward yourself. It's your nervous system trying to regain control. Chaos is predictable when it's all you've known. Peace is terrifying because it's new.</div>
+            </div>
+            
+            <div class="navigation">
+                <button class="nav-button" onclick="prevSegment()">← Back</button>
+                <button class="nav-button" onclick="nextSegment()">Continue →</button>
+            </div>
+        </div>
+        
+        <!-- SEGMENT 7: THE DUSK -->
+        <div class="segment" id="segment7">
+            <div class="segment-header">
+                <div class="segment-number">Part Six</div>
+                <h2 class="segment-title">The Dusk</h2>
+            </div>
+            
+            <div class="visual-container">
+                <div class="dusk" id="duskContainer"></div>
+            </div>
+            
+            <div class="narration">
+                <p>Night approaches.</p>
+                
+                <p>The hills settle. Cool winds. Distant sounds.</p>
+                
+                <p>The day releases.</p>
+                
+                <p>This is the choice:</p>
+                
+                <p><em>You can leave this hillside. Return to the city. Create the familiar chaos. Feed the cortisol addiction. Seek the intensity your body knows as "alive."</em></p>
+                
+                <p>Or.</p>
+                
+                <p><em>You can stay. Just a little longer.</em></p>
+                
+                <p>Long enough to teach your body: This is safe.</p>
+                
+                <p>Long enough to show your nervous system: Calm doesn't mean danger.</p>
+                
+                <p>Long enough to learn: Peace isn't the absence of life. It's a different kind of fullness.</p>
+                
+                <p>The recalibration doesn't happen in one rainy evening.</p>
+                
+                <p>It happens in many. In choosing to stay, again and again, when your body screams to run.</p>
+                
+                <p><em>You're not broken. Your nervous system is following old instructions.</em></p>
+                
+                <p>New instructions take time.</p>
+            </div>
+            
+            <div class="quiz-container">
+                <div class="quiz-question">If you choose to recalibrate, what's the first small step?</div>
+                <div class="quiz-options">
+                    <div class="option-card" data-option="1">
+                        <div class="option-text">Stay with secure person through "boredom"</div>
+                    </div>
+                    <div class="option-card" data-option="2">
+                        <div class="option-text">Keep one weekend completely clear</div>
+                    </div>
+                    <div class="option-card" data-option="3">
+                        <div class="option-text">Notice urge to sabotage, don't act on it</div>
+                    </div>
+                    <div class="option-card" data-option="4">
+                        <div class="option-text">Practice 10 minutes daily stillness</div>
+                    </div>
+                </div>
+                
+                <div class="text-input-container" style="margin-top: 40px;">
+                    <label class="text-input-label">Write your commitment (just for yourself):</label>
+                    <textarea placeholder="What will you try? Be specific..." id="commitment"></textarea>
+                </div>
+            </div>
+            
+            <div class="protip" id="protip6">
+                <div class="protip-label">Pattern Recognition</div>
+                <div class="protip-text">Peace doesn't have to feel good at first. It just has to feel safe eventually. The discomfort you feel when choosing calm is the recalibration happening. Stay anyway.</div>
+            </div>
+            
+            <div class="navigation">
+                <button class="nav-button" onclick="prevSegment()">← Back</button>
+                <button class="nav-button" onclick="showCompletion()">Complete Episode →</button>
+            </div>
+        </div>
+        
+        <!-- COMPLETION DASHBOARD -->
+        <div class="segment" id="completion" style="display: none;">
+            <div class="completion-dashboard">
+                <h2 class="completion-title">The Rain Continues</h2>
+                <p class="completion-message">
+                    You stayed through the entire evening.<br>
+                    That's the practice.
+                </p>
+                
+                <div class="badges-collected">
+                    <div class="badge">
+                        <div class="badge-icon">☁️</div>
+                        <div class="badge-name">The Witness</div>
+                    </div>
+                    <div class="badge">
+                        <div class="badge-icon">🌧️</div>
+                        <div class="badge-name">The Patient</div>
+                    </div>
+                    <div class="badge">
+                        <div class="badge-icon">🏔️</div>
+                        <div class="badge-name">The Rested</div>
+                    </div>
+                    <div class="badge">
+                        <div class="badge-icon">🌾</div>
+                        <div class="badge-name">The Stillness</div>
+                    </div>
+                    <div class="badge">
+                        <div class="badge-icon">🌅</div>
+                        <div class="badge-name">The Clearing</div>
+                    </div>
+                    <div class="badge">
+                        <div class="badge-icon">⭐</div>
+                        <div class="badge-name">The Evening</div>
+                    </div>
+                </div>
+                
+                <p class="completion-message" style="margin-top: 60px;">
+                    Your nervous system won't recalibrate overnight.<br>
+                    This takes months. Sometimes years.<br>
+                    <br>
+                    But every time you choose to stay in calm when your body screams to run—<br>
+                    every time you resist the urge to sabotage peace—<br>
+                    every time you let boring be safe instead of wrong—<br>
+                    <br>
+                    <em>You're rewriting the code.</em>
+                </p>
+            </div>
+        </div>
+        
+        <!-- FOOTER -->
+        <div class="footer">
+            <div class="footer-brand">FORTEEN MIND LABS</div>
+            <div class="footer-copyright">
+                © 2025 <a href="https://forteen.in" class="footer-link">forteen.in</a><br>
+                Part of THE UNDERTOW series
+            </div>
+        </div>
+    </div>
+    
+    <!-- AUDIO ELEMENTS -->
+    <audio id="windSound" loop preload="auto">
+        <source src="./sounds/Soft_wind_through_tr__1-1767077718579.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="rainSound" loop preload="auto">
+        <source src="./sounds/Gentle_monsoon_rain___1-1767077776793.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="streamSound" loop preload="auto">
+        <source src="./sounds/Small_stream_flowing__1-1767077863283.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="cricketsSound" loop preload="auto">
+        <source src="./sounds/Evening_crickets_chi__1-1767077819372.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="birdsSound" loop preload="auto">
+        <source src="./sounds/evening_bird_songs____1-1767077940846.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script>
+        // ===== STATE MANAGEMENT =====
+        let currentSegment = 1;
+        const totalSegments = 7;
+        let voiceEnabled = false;
+        let soundEnabled = false;
+        let speechSynthesis = window.speechSynthesis;
+        let currentUtterance = null;
+        let audioInitialized = false;
+        
+        // ===== AUDIO ELEMENTS =====
+        const audioElements = {
+            wind: document.getElementById('windSound'),
+            rain: document.getElementById('rainSound'),
+            stream: document.getElementById('streamSound'),
+            crickets: document.getElementById('cricketsSound'),
+            birds: document.getElementById('birdsSound')
+        };
+        
+        // Set initial volumes
+        audioElements.wind.volume = 0.30;
+        audioElements.rain.volume = 0.25;
+        audioElements.stream.volume = 0.15;
+        audioElements.crickets.volume = 0.22;
+        audioElements.birds.volume = 0.18;
+        
+        // ===== VOICE SYSTEM =====
+        function toggleVoice() {
+            voiceEnabled = !voiceEnabled;
+            const toggle = document.getElementById('voiceToggle');
+            const label = toggle.querySelector('.toggle-label');
+            const icon = toggle.querySelector('.toggle-icon');
+            
+            if (voiceEnabled) {
+                label.textContent = 'Voice: ON';
+                icon.textContent = '🔊';
+                speakText("I'm here with you. Let's begin.");
+            } else {
+                label.textContent = 'Voice: OFF';
+                icon.textContent = '🔇';
+                if (currentUtterance) {
+                    speechSynthesis.cancel();
+                }
+            }
+        }
+        
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const toggle = document.getElementById('soundToggle');
+            const label = toggle.querySelector('.toggle-label');
+            const icon = toggle.querySelector('.toggle-icon');
+            
+            if (soundEnabled) {
+                label.textContent = 'Sounds: ON';
+                icon.textContent = '🔊';
+                initializeAudio();
+                updateAudioForSegment(currentSegment);
+            } else {
+                label.textContent = 'Sounds: OFF';
+                icon.textContent = '🔇';
+                stopAllAudio();
+            }
+        }
+        
+        function speakText(text) {
+            if (!voiceEnabled) return;
+            
+            speechSynthesis.cancel();
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            
+            const voices = speechSynthesis.getVoices();
+            const maleVoice = voices.find(voice => 
+                voice.name.includes('Male') || 
+                voice.name.includes('Daniel') ||
+                voice.name.includes('James') ||
+                voice.name.includes('Google UK English Male')
+            ) || voices[0];
+            
+            utterance.voice = maleVoice;
+            utterance.rate = 1.0; // Natural speaking pace
+            utterance.pitch = 0.9;
+            utterance.volume = 0.75;
+            
+            currentUtterance = utterance;
+            speechSynthesis.speak(utterance);
+        }
+        
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = () => {};
+        }
+        
+        // ===== AUDIO MANAGEMENT =====
+        function initializeAudio() {
+            if (audioInitialized) return;
+            audioInitialized = true;
+        }
+        
+        function playAudio(audioElement, fadeIn = true) {
+            if (!soundEnabled) return;
+            
+            if (fadeIn) {
+                audioElement.volume = 0;
+                audioElement.play().catch(e => console.log('Audio play prevented:', e));
+                fadeAudioIn(audioElement);
+            } else {
+                audioElement.play().catch(e => console.log('Audio play prevented:', e));
+            }
+        }
+        
+        function stopAudio(audioElement, fadeOut = true) {
+            if (fadeOut) {
+                fadeAudioOut(audioElement);
+            } else {
+                audioElement.pause();
+                audioElement.currentTime = 0;
+            }
+        }
+        
+        function stopAllAudio() {
+            Object.values(audioElements).forEach(audio => {
+                audio.pause();
+                audio.currentTime = 0;
+            });
+        }
+        
+        function fadeAudioIn(audioElement, targetVolume) {
+            if (!targetVolume) {
+                // Get original volume from initial settings
+                if (audioElement === audioElements.wind) targetVolume = 0.30;
+                else if (audioElement === audioElements.rain) targetVolume = 0.25;
+                else if (audioElement === audioElements.stream) targetVolume = 0.15;
+                else if (audioElement === audioElements.crickets) targetVolume = 0.22;
+                else if (audioElement === audioElements.birds) targetVolume = 0.18;
+            }
+            
+            let volume = 0;
+            const fadeInterval = setInterval(() => {
+                if (volume < targetVolume) {
+                    volume += 0.02;
+                    audioElement.volume = Math.min(volume, targetVolume);
+                } else {
+                    clearInterval(fadeInterval);
+                }
+            }, 100);
+        }
+        
+        function fadeAudioOut(audioElement, callback) {
+            let volume = audioElement.volume;
+            const fadeInterval = setInterval(() => {
+                if (volume > 0.02) {
+                    volume -= 0.02;
+                    audioElement.volume = Math.max(volume, 0);
+                } else {
+                    audioElement.volume = 0;
+                    audioElement.pause();
+                    audioElement.currentTime = 0;
+                    clearInterval(fadeInterval);
+                    if (callback) callback();
+                }
+            }, 100);
+        }
+        
+        function updateAudioForSegment(segmentIndex) {
+            if (!soundEnabled) return;
+            
+            // Strategic sound layering per segment
+            switch(segmentIndex) {
+                case 1:
+                    // The Gathering: Wind only
+                    playAudio(audioElements.wind);
+                    break;
+                    
+                case 2:
+                    // First Drops: Wind fades, rain begins
+                    fadeAudioOut(audioElements.wind);
+                    setTimeout(() => playAudio(audioElements.rain), 1000);
+                    break;
+                    
+                case 3:
+                    // Relief Point: Rain + subtle stream
+                    if (audioElements.rain.paused) playAudio(audioElements.rain, false);
+                    setTimeout(() => playAudio(audioElements.stream), 2000);
+                    break;
+                    
+                case 4:
+                    // Steady Rain: Rain + stream continue
+                    if (audioElements.rain.paused) playAudio(audioElements.rain, false);
+                    if (audioElements.stream.paused) playAudio(audioElements.stream, false);
+                    break;
+                    
+                case 5:
+                    // Evening Chorus: Full symphony
+                    if (audioElements.rain.paused) playAudio(audioElements.rain, false);
+                    if (audioElements.stream.paused) playAudio(audioElements.stream, false);
+                    setTimeout(() => playAudio(audioElements.crickets), 1500);
+                    setTimeout(() => playAudio(audioElements.birds), 3000);
+                    break;
+                    
+                case 6:
+                    // The Clearing: Rain lighter, crickets + birds continue
+                    if (audioElements.rain.volume > 0.15) {
+                        let interval = setInterval(() => {
+                            if (audioElements.rain.volume > 0.15) {
+                                audioElements.rain.volume -= 0.01;
+                            } else {
+                                clearInterval(interval);
+                            }
+                        }, 100);
+                    }
+                    if (audioElements.crickets.paused) playAudio(audioElements.crickets, false);
+                    if (audioElements.birds.paused) playAudio(audioElements.birds, false);
+                    if (audioElements.stream.paused) playAudio(audioElements.stream, false);
+                    break;
+                    
+                case 7:
+                    // The Dusk: Crickets primary, light rain
+                    if (audioElements.rain.volume > 0.12) {
+                        let interval = setInterval(() => {
+                            if (audioElements.rain.volume > 0.12) {
+                                audioElements.rain.volume -= 0.01;
+                            } else {
+                                clearInterval(interval);
+                            }
+                        }, 100);
+                    }
+                    if (audioElements.crickets.paused) playAudio(audioElements.crickets, false);
+                    fadeAudioOut(audioElements.birds);
+                    if (audioElements.stream.paused) playAudio(audioElements.stream, false);
+                    break;
+            }
+        }
+        
+        // ===== SEGMENT NAVIGATION =====
+        function showSegment(index) {
+            const current = document.querySelector('.segment.active');
+            if (current) {
+                current.style.opacity = '0';
+                setTimeout(() => {
+                    current.classList.remove('active');
+                    current.style.display = 'none';
+                }, 1000);
+            }
+            
+            setTimeout(() => {
+                const newSegment = document.getElementById(`segment${index}`);
+                newSegment.style.display = 'block';
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                setTimeout(() => {
+                    newSegment.classList.add('active');
+                    currentSegment = index;
+                    updateProgress();
+                    updateAudioForSegment(index);
+                    triggerSegmentAnimation(index);
+                    provideSegmentVoice(index);
+                }, 300);
+            }, 1200);
+        }
+        
+        function nextSegment() {
+            if (currentSegment < totalSegments) {
+                showSegment(currentSegment + 1);
+            } else if (currentSegment === totalSegments) {
+                showCompletion();
+            }
+        }
+        
+        function prevSegment() {
+            if (currentSegment > 1) {
+                showSegment(currentSegment - 1);
+            }
+        }
+        
+        // ===== SEGMENT-SPECIFIC ANIMATIONS =====
+        function triggerSegmentAnimation(index) {
+            setTimeout(() => {
+                switch(index) {
+                    case 2:
+                        const dropsContainer = document.getElementById('firstDropsContainer');
+                        for (let i = 0; i < 30; i++) {
+                            const drop = document.createElement('div');
+                            drop.className = 'raindrop';
+                            drop.style.left = Math.random() * 100 + '%';
+                            drop.style.animationDelay = Math.random() * 2 + 's';
+                            dropsContainer.appendChild(drop);
+                        }
+                        break;
+                    case 5:
+                        const chorusContainer = document.getElementById('eveningChorusContainer');
+                        const birds = ['🦅', '🕊️', '🦜'];
+                        for (let i = 0; i < 5; i++) {
+                            const bird = document.createElement('div');
+                            bird.className = 'bird';
+                            bird.textContent = birds[Math.floor(Math.random() * birds.length)];
+                            bird.style.left = Math.random() * 80 + '%';
+                            bird.style.top = Math.random() * 60 + '%';
+                            bird.style.animationDelay = i * 2 + 's';
+                            chorusContainer.appendChild(bird);
+                        }
+                        break;
+                    case 7:
+                        const duskContainer = document.getElementById('duskContainer');
+                        const starsContainer = document.createElement('div');
+                        starsContainer.className = 'stars';
+                        for (let i = 0; i < 30; i++) {
+                            const star = document.createElement('div');
+                            star.className = 'star';
+                            star.style.left = Math.random() * 100 + '%';
+                            star.style.top = Math.random() * 70 + '%';
+                            star.style.animationDelay = Math.random() * 3 + 's';
+                            starsContainer.appendChild(star);
+                        }
+                        duskContainer.appendChild(starsContainer);
+                        break;
+                }
+            }, 1500);
+        }
+        
+        // ===== VOICE GUIDANCE PER SEGMENT =====
+        function provideSegmentVoice(index) {
+            const voiceGuides = {
+                1: "The clouds are gathering. Notice how your body responds.",
+                2: "The rain begins. One drop at a time. Can you stay?",
+                3: "Rest here. Let the hills hold you.",
+                4: "This is what calm feels like. Full. Present. Different.",
+                5: "Listen to the evening. Crickets. Birds. Life in a gentler rhythm.",
+                6: "The rain clears. Colors emerge. Notice any urge to prepare for what's next.",
+                7: "Night approaches. This is your choice. Stay a little longer."
+            };
+            
+            if (voiceGuides[index]) {
+                setTimeout(() => speakText(voiceGuides[index]), 2000);
+            }
+        }
+        
+        // ===== TRANSITION SCREEN =====
+        function showTransition() {
+            const transition = document.getElementById('transitionScreen');
+            transition.classList.add('active');
+            speakText("Take all the time you need.");
+        }
+        
+        function continueAfterTransition() {
+            const transition = document.getElementById('transitionScreen');
+            transition.classList.remove('active');
+            setTimeout(() => showSegment(4), 500);
+        }
+        
+        // ===== INTERACTIVE ELEMENTS =====
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.option-card')) {
+                const card = e.target.closest('.option-card');
+                const container = card.closest('.quiz-container');
+                
+                container.querySelectorAll('.option-card').forEach(c => {
+                    if (c === card) {
+                        c.classList.toggle('selected');
+                    }
+                });
+                
+                const segment = card.closest('.segment');
+                const protip = segment.querySelector('.protip');
+                if (protip && !protip.classList.contains('revealed')) {
+                    setTimeout(() => {
+                        protip.classList.add('revealed');
+                        speakText("Pattern recognized.");
+                    }, 500);
+                }
+            }
+        });
+        
+        document.querySelectorAll('textarea').forEach(textarea => {
+            textarea.addEventListener('focus', function() {
+                const segment = this.closest('.segment');
+                const protip = segment.querySelector('.protip');
+                if (protip && !protip.classList.contains('revealed')) {
+                    setTimeout(() => {
+                        protip.classList.add('revealed');
+                    }, 1000);
+                }
+            });
+        });
+        
+        // ===== PROGRESS BAR =====
+        function updateProgress() {
+            const progress = ((currentSegment - 1) / (totalSegments - 1)) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+        
+        // ===== COMPLETION =====
+        function showCompletion() {
+            const current = document.querySelector('.segment.active');
+            if (current) {
+                current.style.opacity = '0';
+                setTimeout(() => {
+                    current.classList.remove('active');
+                    current.style.display = 'none';
+                }, 1000);
+            }
+            
+            setTimeout(() => {
+                const completion = document.getElementById('completion');
+                completion.style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                setTimeout(() => {
+                    completion.style.opacity = '1';
+                    document.getElementById('progressBar').style.width = '100%';
+                    speakText("The evening is complete. Well done.");
+                    
+                    // Fade out all sounds gently
+                    Object.values(audioElements).forEach(audio => fadeAudioOut(audio));
+                }, 300);
+            }, 1200);
+        }
+        
+        // ===== EVENT LISTENERS =====
+        document.getElementById('voiceToggle').addEventListener('click', toggleVoice);
+        document.getElementById('soundToggle').addEventListener('click', toggleSound);
+        
+        // ===== INITIALIZATION =====
+        window.addEventListener('load', () => {
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
