@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mind Labs | Forteen</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Botanical Sunlit Palette */
+            --cream: #f9f6f1;
+            --warm-white: #fefdfb;
+            --sage: #8a9a7b;
+            --deep-sage: #5a6b52;
+            --terracotta: #c66b54;
+            --soft-terracotta: #d4887a;
+            --gold: #d4a574;
+            --honey: #e8b55f;
+            --dust: #b8a99a;
+            --lavender: #d4c5d8;
+            --shadow: rgba(90, 107, 82, 0.08);
+            --glow: rgba(212, 165, 116, 0.15);
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, var(--warm-white) 0%, var(--cream) 100%);
+            color: var(--deep-sage);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 80px;
+            padding: 40px 20px;
+            background: linear-gradient(to bottom, transparent, var(--glow), transparent);
+            border-radius: 20px;
+        }
+
+        .brand {
+            font-family: 'Sora', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.3em;
+            color: var(--sage);
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .hero-title {
+            font-family: 'Sora', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 600;
+            color: var(--deep-sage);
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--sage);
+            margin-bottom: 40px;
+            font-style: italic;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 20px 30px;
+            background: var(--warm-white);
+            border-radius: 15px;
+            box-shadow: 0 4px 20px var(--shadow);
+            border: 1px solid rgba(138, 154, 123, 0.1);
+        }
+
+        .stat-number {
+            font-family: 'Sora', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--terracotta);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--sage);
+            font-weight: 600;
+            letter-spacing: 0.1em;
+        }
+
+        /* Series Section */
+        .series-section {
+            margin-bottom: 100px;
+        }
+
+        .series-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--glow);
+        }
+
+        .series-title {
+            font-family: 'Sora', sans-serif;
+            font-size: 2rem;
+            color: var(--deep-sage);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .series-description {
+            font-size: 1.2rem;
+            color: var(--sage);
+            font-style: italic;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Episode Grid */
+        .episodes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        /* Episode Card */
+        .episode-card {
+            background: var(--warm-white);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 30px var(--shadow);
+            border: 1px solid rgba(138, 154, 123, 0.15);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .episode-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--sage), var(--gold), var(--terracotta));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .episode-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px var(--shadow);
+        }
+
+        .episode-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            margin-bottom: 20px;
+            font-family: 'Sora', sans-serif;
+        }
+
+        .status-live {
+            background: linear-gradient(135deg, var(--sage), var(--deep-sage));
+            color: white;
+        }
+
+        .status-review {
+            background: linear-gradient(135deg, var(--gold), var(--honey));
+            color: var(--deep-sage);
+        }
+
+        .episode-title {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.5rem;
+            color: var(--deep-sage);
+            margin-bottom: 20px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .episode-description {
+            font-size: 1.05rem;
+            color: var(--sage);
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        .episode-meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: var(--dust);
+            margin-bottom: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(138, 154, 123, 0.1);
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .episode-cta {
+            display: inline-block;
+            padding: 12px 28px;
+            background: linear-gradient(135deg, var(--sage), var(--deep-sage));
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-family: 'Sora', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .episode-cta:hover {
+            background: white;
+            color: var(--deep-sage);
+            border-color: var(--sage);
+            transform: translateX(5px);
+        }
+
+        .episode-cta.disabled {
+            background: linear-gradient(135deg, var(--dust), var(--lavender));
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .episode-cta.disabled:hover {
+            transform: none;
+            background: linear-gradient(135deg, var(--dust), var(--lavender));
+            color: white;
+            border-color: transparent;
+        }
+
+        /* Waitlist Section */
+        .waitlist-section {
+            text-align: center;
+            padding: 80px 40px;
+            background: linear-gradient(to bottom, transparent, var(--glow), transparent);
+            border-radius: 30px;
+            margin: 100px 0 80px 0;
+        }
+
+        .waitlist-title {
+            font-family: 'Sora', sans-serif;
+            font-size: 2.5rem;
+            color: var(--deep-sage);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .waitlist-description {
+            font-size: 1.3rem;
+            color: var(--sage);
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .waitlist-form {
+            display: flex;
+            gap: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .waitlist-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 16px 24px;
+            border: 2px solid var(--sage);
+            border-radius: 25px;
+            font-family: 'Crimson Text', serif;
+            font-size: 1.1rem;
+            background: var(--warm-white);
+            color: var(--deep-sage);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .waitlist-input:focus {
+            border-color: var(--terracotta);
+            box-shadow: 0 0 0 4px var(--glow);
+        }
+
+        .waitlist-button {
+            padding: 16px 40px;
+            background: linear-gradient(135deg, var(--terracotta), var(--soft-terracotta));
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-family: 'Sora', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .waitlist-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(198, 107, 84, 0.3);
+        }
+
+        /* Acknowledgments Section */
+        .acknowledgments {
+            text-align: center;
+            padding: 60px 40px;
+            margin: 80px 0 60px 0;
+            background: var(--warm-white);
+            border-radius: 20px;
+            border: 1px solid rgba(138, 154, 123, 0.15);
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+
+        .acknowledgments-title {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 0.3em;
+            color: var(--sage);
+            margin-bottom: 30px;
+            font-weight: 300;
+            text-transform: uppercase;
+        }
+
+        .acknowledgments-names {
+            font-size: 1.3rem;
+            color: var(--deep-sage);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .acknowledgments-title-text {
+            font-size: 1rem;
+            color: var(--sage);
+            font-style: italic;
+            margin-bottom: 30px;
+        }
+
+        .acknowledgments-body {
+            font-size: 1.1rem;
+            color: var(--sage);
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 1px solid rgba(138, 154, 123, 0.1);
+            font-size: 0.95rem;
+            color: var(--sage);
+        }
+
+        .footer a {
+            color: var(--deep-sage);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--terracotta);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 20px;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .stats {
+                gap: 30px;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+
+            .episodes-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .waitlist-form {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .waitlist-input {
+                min-width: 100%;
+            }
+
+            .waitlist-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="brand">FORTEEN MIND LABS</div>
+            <h1 class="hero-title">Pattern Recognition<br>Through Story</h1>
+            <p class="hero-subtitle">Interactive episodes exploring human behavior through metaphor, nature, and sound.</p>
+            
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-number">7</span>
+                    <span class="stat-label">EPISODES LIVE</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">2</span>
+                    <span class="stat-label">UNDER CLINICAL REVIEW</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">20+</span>
+                    <span class="stat-label">IN DEVELOPMENT</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- NATURE & DESIGN SERIES -->
+        <section class="series-section">
+            <div class="series-header">
+                <h2 class="series-title">NATURE & DESIGN</h2>
+                <p class="series-description">Restoration through natural systems. What happens when we return to our design?</p>
+            </div>
+
+            <div class="episodes-grid">
+                <!-- Episode 1: The Pollinator's Return -->
+                <div class="episode-card">
+                    <span class="status-badge status-live">✅ LIVE NOW</span>
+                    <h3 class="episode-title">The Pollinator's Return</h3>
+                    <p class="episode-description">The bees disappeared. The desert went silent. When they returned, everything else came back too. What pollinators did you remove from your life? Boredom. Silence. Waiting. The things you killed with infinite scroll.</p>
+                    <div class="episode-meta">
+                        <span class="meta-item">⏱ 15 min</span>
+                        <span class="meta-item">🌿 6 chapters</span>
+                        <span class="meta-item">🐝 Restoration</span>
+                    </div>
+                    <a href="#" class="episode-cta">EXPERIENCE NOW</a>
+                </div>
+
+                <!-- Episode 2: The Underground Network -->
+                <div class="episode-card">
+                    <span class="status-badge status-live">✅ LIVE NOW</span>
+                    <h3 class="episode-title">The Underground Network</h3>
+                    <p class="episode-description">Trees don't compete. They share resources through fungal networks you can't see. The forest survives because what's beneath the soil connects everything above it. You think you're alone. You're standing on a network you forgot was there.</p>
+                    <div class="episode-meta">
+                        <span class="meta-item">⏱ 12 min</span>
+                        <span class="meta-item">🍄 Mycelium</span>
+                        <span class="meta-item">🌲 Hidden systems</span>
+                    </div>
+                    <a href="#" class="episode-cta">EXPERIENCE NOW</a>
+                </div>
+
+                <!-- Episode 3: The Cultivated Heart -->
+                <div class="episode-card">
+                    <span class="status-badge status-live">✅ LIVE NOW</span>
+                    <h3 class="episode-title">The Cultivated Heart</h3>
+                    <p class="episode-description">The wild rose blooms once, briefly, with a scent that stops you in your tracks. The cultivated rose blooms all season, perfectly shaped, no scent at all. One was bred for survival. The other for your approval. Which are you becoming?</p>
+                    <div class="episode-meta">
+                        <span class="meta-item">⏱ 12 min</span>
+                        <span class="meta-item">🌹 Wild vs. tamed</span>
+                        <span class="meta-item">🎭 Authenticity</span>
+                    </div>
+                    <a href="#" class="episode-cta">EXPERIENCE NOW</a>
+                </div>
+
+                <!-- Episode 4: The Art of Waiting -->
+                <div class="episode-card">
+                    <span class="status-badge status-live">✅ LIVE NOW</span>
+                    <h3 class="episode-title">The Art of Waiting</h3>
+                    <p class="episode-description">The cicada waits 17 years underground. Silent. Preparing. Then emerges for one summer of sound. Not early. Not late. Exactly when the time is right. What are you preparing for in the dark that no one can see yet?</p>
+                    <div class="episode-meta">
+                        <span class="meta-item">⏱ 12 min</span>
+                        <span class="meta-item">🦗 Cicada cycles</span>
+                        <span class="meta-item">⏳ Sacred timing</span>
+                    </div>
+                    <a href="#" class="episode-cta">EXPERIENCE NOW</a>
+                </div>
+
+                <!-- Episode 5: Seven -->
+                <div class="episode-card">
+                    <span class="status-badge status-review">🔄 CLINICAL REVIEW IN PROGRESS</span>
+                    <h3 class="episode-title">Seven</h3>
+                    <p class="episode-description">The octopus has seven arms and nine brains. Seven different solutions happening simultaneously. It doesn't commit to one strategy. It tries all of them. You've been taught to pick one path. What if you didn't?</p>
+                    <div class="episode-meta">
+                        <span class="meta-item">⏱ 14 min</span>
+                        <span class="meta-item">🐙 Distributed intelligence</span>
+                        <span class="meta-item">🧩 Multiple strategies</span>
+                    </div>
+                    <a href="#" class="episode-cta disabled">COMING SOON</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- THE UNDERTOW SERIES -->
+        <section class="series-section">
+            <div class="series-header">
+                <h2 class="series-title">THE UNDERTOW</h2>
+                <p class="series-description">You think you're swimming. You're not. Pattern recognition without prescription.</p>
+            </div>
+
+            <div class="episodes-grid">
+                <!-- Episode 1: The Slot Machine Heart -->
+                <div class="episode-card">
+                    <span class="status-badge status-live">✅ LIVE NOW</span>
+                    <h3 class="episode-title">The Slot Machine Heart</h3>
+                    <p class="episode-description">Why does inconsistency feel like love? Your brain learned that unpredictable rewards are more intoxicating than reliable ones. The relationship that hurts you isn't broken. It's a slot machine. And you keep pulling the lever.</p>
+                    <div class="episode-meta">
+                        <span class="meta-item">⏱ 12 min</span>
+                        <span class="meta-item">🎰 Intermittent reinforcement</span>
+                        <span class="meta-item">💔 Trauma bonding</span>
+                    </div>
+                    <a href="#" class="episode-cta">EXPERIENCE NOW</a>
+                </div>
+
+                <!-- Episode 2: The Rerun -->
+                <div class="episode-card">
+                    <span class="status-badge status-live">✅ LIVE NOW</span>
+                    <h3 class="episode-title">The Rerun</h3>
+                    <p class="episode-description">Different cast. Same plot. You keep buying tickets. Why do you choose the same story in every relationship, job, friendship? Your brain doesn't seek happiness. It seeks familiarity. And familiarity feels like home, even when home was chaos.</p>
+                    <div class="episode-meta">
+                        <span class="meta-item">⏱ 12 min</span>
+                        <span class="meta-item">🎬 Repetition compulsion</span>
+                        <span class="meta-item">🔄 Pattern recognition</span>
+                    </div>
+                    <a href="#" class="episode-cta">EXPERIENCE NOW</a>
+                </div>
+
+                <!-- Episode 3: The Allergy to Calm -->
+                <div class="episode-card">
+                    <span class="status-badge status-review">🔄 CLINICAL REVIEW IN PROGRESS</span>
+                    <h3 class="episode-title">The Allergy to Calm</h3>
+                    <p class="episode-description">Why stability feels wrong or boring. Your nervous system was calibrated to chaos. Calm reads as threat. When peace feels like danger, you're not broken—you're just running software written in childhood.</p>
+                    <div class="episode-meta">
+                        <span class="meta-item">⏱ 15 min</span>
+                        <span class="meta-item">🏥 Nervous system</span>
+                        <span class="meta-item">🧬 Pattern recognition</span>
+                    </div>
+                    <a href="#" class="episode-cta disabled">COMING SOON</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- THE FREQUENCY SERIES -->
+        <section class="series-section">
+            <div class="series-header">
+                <h2 class="series-title">THE FREQUENCY</h2>
+                <p class="series-description">Human behavior through the lens of sound, music, and sensation.</p>
+            </div>
+
+            <div class="episodes-grid">
+                <!-- Episode 1: The Loudness War -->
+                <div class="episode-card">
+                    <span class="status-badge status-live">✅ LIVE NOW</span>
+                    <h3 class="episode-title">The Loudness War</h3>
+                    <p class="episode-description">Music got louder. Then louder. Until everything became noise. The same thing happened to your life. When everything competes for your attention at maximum volume, nothing sounds like anything anymore. Welcome to the frequency where silence became a luxury.</p>
+                    <div class="episode-meta">
+                        <span class="meta-item">⏱ 14 min</span>
+                        <span class="meta-item">🎵 Audio compression</span>
+                        <span class="meta-item">🔊 Sensory overload</span>
+                    </div>
+                    <a href="#" class="episode-cta">EXPERIENCE NOW</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Waitlist Section -->
+        <section class="waitlist-section">
+            <h2 class="waitlist-title">Join the Waitlist</h2>
+            <p class="waitlist-description">Be the first to experience new episodes as they're released. No spam. Just pattern recognition.</p>
+            <form class="waitlist-form">
+                <input type="email" class="waitlist-input" placeholder="your@email.com" required>
+                <button type="submit" class="waitlist-button">NOTIFY ME</button>
+            </form>
+        </section>
+
+        <!-- Acknowledgments Section -->
+        <section class="acknowledgments">
+            <h3 class="acknowledgments-title">Acknowledgments</h3>
+            <div class="acknowledgments-names">Radhika Bhat, Counselling Psychologist</div>
+            <div class="acknowledgments-names">Sangita Nair, Psychologist</div>
+            <p class="acknowledgments-body">
+                This work would not be possible without the invaluable guidance and clinical expertise of our collaborators. Their insights ensure that pattern recognition remains grounded in psychological accuracy while respecting the complexity of human experience. Any therapeutic value this work holds is built on their foundation.
+            </p>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <a href="#">Privacy Disclaimer</a> | Copyright © 2026 Forteen.in
+        </footer>
+    </div>
+</body>
+</html>
