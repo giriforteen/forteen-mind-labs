@@ -1,0 +1,1995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Loudness War | THE FREQUENCY - Episode 001</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            color: #2C1810;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Section-specific backgrounds with varied vignettes */
+        #segment1 { background: radial-gradient(ellipse at center, #FFF8F0 0%, #F5E6E8 50%, #E8D5D8 100%); }
+        #segment2 { background: linear-gradient(to bottom, #FFF8F0 0%, #F5E6E8 50%, #EFD9D5 100%); }
+        #segment3 { background: linear-gradient(to bottom, #FFF8F0 0%, #F5E6E8 50%, #EFD9D5 100%); }
+        #segment4 { background: linear-gradient(to top, #3D2E29 0%, #8B4558 40%, #D5A6A0 70%, #F5E6E8 100%); color: #FFF8F0; }
+        #segment5 { background: linear-gradient(135deg, #E8D5D8 0%, #F5E6E8 50%, #D4A574 100%); }
+        #segment6 { background: radial-gradient(ellipse at center, #FFF8F0 0%, #F5DED9 50%, #E8D5D8 100%); }
+        #segment7 { background: linear-gradient(to right, #F5E6E8 0%, #E8D5D8 50%, #D4A574 100%); }
+        #segment8 { background: radial-gradient(circle at center, #FFFFFF 0%, #FFF8F0 60%, #F5E6E8 100%); }
+        #segment9 { background: radial-gradient(ellipse at center, #FFF8F0 0%, #F5E6E8 50%, #E8D5D8 100%); }
+
+        /* Full viewport sections */
+        .section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 40px;
+            position: relative;
+        }
+
+        .content-wrapper {
+            max-width: 1000px;
+            width: 100%;
+            z-index: 1;
+            text-align: center;
+        }
+
+        /* Typography */
+        .series-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            color: #3D2E29;
+        }
+
+        .series-tagline {
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            font-weight: 300;
+            letter-spacing: 0.05em;
+            opacity: 0.7;
+            margin-bottom: 3rem;
+            color: #5C4A45;
+        }
+
+        .episode-title {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            opacity: 0.6;
+            margin-bottom: 8rem;
+            color: #8B4558;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            margin-bottom: 3rem;
+            color: #3D2E29;
+        }
+
+        .section-text {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            font-weight: 300;
+            line-height: 2;
+            margin-bottom: 2rem;
+            color: #3D2E29;
+        }
+
+        /* Dark section text */
+        #segment4 .section-title,
+        #segment4 .section-text {
+            color: #FFF8F0;
+        }
+
+        /* Dark section badge and buttons */
+        #segment4 .badge-earned {
+            background: rgba(212, 165, 116, 0.3);
+            border: 1px solid rgba(212, 165, 116, 0.6);
+            color: #FFF8F0;
+        }
+
+        #segment4 .nav-button {
+            background: rgba(212, 165, 116, 0.2);
+            border: 2px solid rgba(212, 165, 116, 0.5);
+            color: #FFF8F0;
+        }
+
+        #segment4 .nav-button:hover {
+            background: rgba(212, 165, 116, 0.4);
+            border-color: rgba(212, 165, 116, 0.8);
+        }
+
+        /* Navigation */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0.5;
+            animation: pulse 2s ease-in-out infinite;
+            cursor: pointer;
+            color: #5C4A45;
+        }
+
+        .scroll-indicator::after {
+            content: '↓';
+            display: block;
+            margin-top: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 0.9; }
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .nav-button {
+            background: rgba(198, 107, 84, 0.15);
+            border: 2px solid rgba(198, 107, 84, 0.3);
+            border-radius: 8px;
+            padding: 1rem 2rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            color: #3D2E29;
+        }
+
+        .nav-button:hover {
+            background: rgba(198, 107, 84, 0.25);
+            border-color: rgba(198, 107, 84, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Waveforms */
+        .waveform-canvas {
+            width: 100%;
+            max-width: 800px;
+            height: 120px;
+            margin: 2rem auto;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(140, 69, 88, 0.1);
+        }
+
+        .waveform-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .waveform-dynamic {
+            stroke: #C66B54;
+            stroke-width: 2.5;
+            fill: none;
+            filter: drop-shadow(0 2px 8px rgba(198, 107, 84, 0.4));
+            animation: wavePulse 3s ease-in-out infinite;
+        }
+
+        .waveform-compressed {
+            stroke: #8B4558;
+            stroke-width: 3;
+            fill: none;
+            filter: drop-shadow(0 2px 8px rgba(139, 69, 88, 0.4));
+        }
+
+        @keyframes wavePulse {
+            0%, 100% { opacity: 0.85; }
+            50% { opacity: 1; }
+        }
+
+        .waveform-label {
+            font-size: 0.9rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.7;
+            color: #5C4A45;
+            margin: 1rem 0;
+        }
+
+        /* VU Meter */
+        .vu-meter-container {
+            width: 350px;
+            height: 350px;
+            margin: 3rem auto;
+            position: relative;
+        }
+
+        .vu-meter {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .vu-meter-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 248, 240, 0.1) 0%, transparent 70%);
+            border: 2px solid rgba(255, 248, 240, 0.2);
+        }
+
+        .vu-needle {
+            position: absolute;
+            width: 4px;
+            height: 45%;
+            background: linear-gradient(to top, #C66B54 0%, #D4A574 100%);
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            transform: translateX(-50%) rotate(-45deg);
+            filter: drop-shadow(0 0 10px rgba(212, 165, 116, 0.6));
+            animation: needleSwing 4s ease-in-out;
+        }
+
+        @keyframes needleSwing {
+            0% { transform: translateX(-50%) rotate(-45deg); }
+            50% { transform: translateX(-50%) rotate(30deg); }
+            100% { transform: translateX(-50%) rotate(45deg); }
+        }
+
+        /* Interactive Elements */
+        .interactive-card {
+            background: rgba(255, 255, 255, 0.6);
+            border: 2px solid rgba(198, 107, 84, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 600px;
+            box-shadow: 0 4px 20px rgba(140, 69, 88, 0.1);
+        }
+
+        .interactive-question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #3D2E29;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid rgba(198, 107, 84, 0.2);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            background: rgba(255, 255, 255, 0.8);
+            color: #3D2E29;
+            transition: all 0.3s ease;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: rgba(198, 107, 84, 0.5);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .option-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .option-card {
+            background: rgba(255, 255, 255, 0.6);
+            border: 2px solid rgba(198, 107, 84, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .option-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(198, 107, 84, 0.4);
+            box-shadow: 0 6px 25px rgba(140, 69, 88, 0.15);
+        }
+
+        .option-card.selected {
+            background: rgba(198, 107, 84, 0.15);
+            border-color: #C66B54;
+        }
+
+        /* Pro Tips */
+        .protip-card {
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.2) 0%, rgba(198, 107, 84, 0.1) 100%);
+            border-left: 4px solid #D4A574;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 3rem auto;
+            max-width: 700px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .protip-card.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .protip-label {
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #8B4558;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .protip-text {
+            font-size: 1.1rem;
+            font-style: italic;
+            line-height: 1.8;
+            color: #3D2E29;
+        }
+
+        /* Badges */
+        .badge-earned {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(212, 165, 116, 0.2);
+            border: 1px solid rgba(212, 165, 116, 0.4);
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #8B4558;
+            margin: 1rem auto;
+        }
+
+        /* Completion Dashboard */
+        .completion-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(140, 69, 88, 0.1);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #C66B54;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            opacity: 0.7;
+            color: #5C4A45;
+        }
+
+        .badge-collection {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin: 3rem 0;
+        }
+
+        .badge-item {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid rgba(198, 107, 84, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .badge-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #3D2E29;
+        }
+
+        /* Audio toggle */
+        .audio-toggle {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(92, 74, 69, 0.3);
+            color: #3D2E29;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(140, 69, 88, 0.15);
+            backdrop-filter: blur(10px);
+        }
+
+        .audio-toggle:hover {
+            background: rgba(255, 255, 255, 0.8);
+            transform: scale(1.05);
+        }
+
+        /* Progress indicator */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(to right, #C66B54, #D4A574);
+            z-index: 1001;
+            transition: width 0.3s ease;
+        }
+
+        /* Attribution */
+        .attribution {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.4;
+            color: #5C4A45;
+            z-index: 1000;
+        }
+
+        /* Visual Art Elements */
+        .visual-art {
+            width: 100%;
+            max-width: 500px;
+            height: 300px;
+            margin: 3rem auto;
+            position: relative;
+        }
+
+        .visual-art svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Vinyl record animation */
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .vinyl-spin {
+            animation: spin 8s linear infinite;
+            transform-origin: center;
+        }
+
+        /* Tape reel animation */
+        @keyframes reel-rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .reel-spin {
+            animation: reel-rotate 4s linear infinite;
+            transform-origin: center;
+        }
+
+        /* Loop pulse */
+        @keyframes loop-pulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        .loop-element {
+            animation: loop-pulse 3s ease-in-out infinite;
+        }
+
+        /* Geometric precision */
+        .precision-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: draw-line 3s ease-out forwards;
+        }
+
+        @keyframes draw-line {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .section {
+                padding: 40px 20px;
+            }
+
+            .waveform-canvas {
+                height: 80px;
+                padding: 15px;
+            }
+
+            .vu-meter-container {
+                width: 250px;
+                height: 250px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .option-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Hide sections by default except first */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Audio Toggle -->
+    <button class="audio-toggle" id="audioToggle" aria-label="Toggle audio">🔊</button>
+
+    <!-- Attribution -->
+    <div class="attribution">© FORTEEN 2026 • THE FREQUENCY</div>
+
+    <!-- SEGMENT 1: Title Card -->
+    <section class="section active" id="segment1" data-segment="1">
+        <div class="content-wrapper">
+            <h1 class="series-title">The Frequency</h1>
+            <p class="series-tagline">What you're tuned to. What you're tuning out.</p>
+            <p class="episode-title">Episode 001: The Loudness War</p>
+            <div class="scroll-indicator" onclick="goToSegment(2)">Begin</div>
+        </div>
+    </section>
+
+    <!-- SEGMENT 2: The Analog Sessions -->
+    <section class="section" id="segment2" data-segment="2">
+        <div class="content-wrapper">
+            <h2 class="section-title">The Analog Sessions</h2>
+            
+            <p class="section-text">
+                Imagine you're in a recording studio in 1975.<br/>
+                Analog tape. Physical mixing board. Human hands on faders.
+            </p>
+
+            <p class="section-text">
+                To record music, you played it. It was captured on tape.<br/>
+                What you played is what you got. Imperfections and all.
+            </p>
+
+            <div class="waveform-label">1975 • Analog • Dynamic Range</div>
+            <div class="waveform-canvas">
+                <svg class="waveform-svg" viewBox="0 0 800 120">
+                    <path class="waveform-dynamic" id="wave1" d=""/>
+                </svg>
+            </div>
+
+            <!-- Vinyl Record Art -->
+            <div class="visual-art">
+                <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Vinyl Record -->
+                    <g class="vinyl-spin">
+                        <circle cx="150" cy="150" r="80" fill="#2C1810" opacity="0.9"/>
+                        <circle cx="150" cy="150" r="75" fill="none" stroke="#C66B54" stroke-width="0.5" opacity="0.3"/>
+                        <circle cx="150" cy="150" r="60" fill="none" stroke="#C66B54" stroke-width="0.5" opacity="0.3"/>
+                        <circle cx="150" cy="150" r="45" fill="none" stroke="#C66B54" stroke-width="0.5" opacity="0.3"/>
+                        <circle cx="150" cy="150" r="30" fill="none" stroke="#C66B54" stroke-width="0.5" opacity="0.3"/>
+                        <circle cx="150" cy="150" r="15" fill="none" stroke="#D4A574" stroke-width="1" opacity="0.5"/>
+                        <circle cx="150" cy="150" r="8" fill="#8B4558"/>
+                    </g>
+                    
+                    <!-- Tape Reels -->
+                    <g class="reel-spin" transform="translate(350, 100)">
+                        <circle cx="0" cy="0" r="40" fill="none" stroke="#8B4558" stroke-width="2" opacity="0.6"/>
+                        <circle cx="0" cy="0" r="30" fill="#D4A574" opacity="0.3"/>
+                        <line x1="-30" y1="0" x2="30" y2="0" stroke="#8B4558" stroke-width="1.5" opacity="0.6"/>
+                        <line x1="0" y1="-30" x2="0" y2="30" stroke="#8B4558" stroke-width="1.5" opacity="0.6"/>
+                    </g>
+                    <g class="reel-spin" transform="translate(350, 200)" style="animation-delay: 0.5s;">
+                        <circle cx="0" cy="0" r="40" fill="none" stroke="#8B4558" stroke-width="2" opacity="0.6"/>
+                        <circle cx="0" cy="0" r="30" fill="#D4A574" opacity="0.3"/>
+                        <line x1="-30" y1="0" x2="30" y2="0" stroke="#8B4558" stroke-width="1.5" opacity="0.6"/>
+                        <line x1="0" y1="-30" x2="0" y2="30" stroke="#8B4558" stroke-width="1.5" opacity="0.6"/>
+                    </g>
+                    
+                    <!-- Tape between reels -->
+                    <path d="M 350,140 L 350,160" stroke="#8B4558" stroke-width="20" opacity="0.4"/>
+                </svg>
+            </div>
+
+            <p class="section-text">
+                The drummer played slightly behind the beat. That's what created the groove.<br/>
+                The singer's voice cracked on the high note. That's what created the emotion.<br/>
+                The guitarist hit a wrong note and kept going. That's what created the character.
+            </p>
+
+            <div class="interactive-card">
+                <div class="interactive-question">What's one thing you used to do that had natural constraints?</div>
+                <div class="option-cards" id="analogOptions">
+                    <div class="option-card" data-option="letters">📝 Write letters<br/><small>(couldn't unsend)</small></div>
+                    <div class="option-card" data-option="photos">📷 Develop photos<br/><small>(couldn't see until developed)</small></div>
+                    <div class="option-card" data-option="calls">☎️ Call someone<br/><small>(had to be home)</small></div>
+                    <div class="option-card" data-option="lost">🗺️ Get lost<br/><small>(no GPS)</small></div>
+                    <div class="option-card" data-option="bored">⏸️ Be bored<br/><small>(no phone to fill space)</small></div>
+                </div>
+            </div>
+
+            <div class="protip-card" id="protip1">
+                <div class="protip-label">PRO TIP #1 UNLOCKED</div>
+                <div class="protip-text">"Analog wasn't slower. It was more human. The delay between action and result wasn't inefficiency—it was where learning happened."</div>
+            </div>
+
+            <div class="badge-earned" id="badge1" style="opacity: 0;">
+                🎚️ Badge Earned: The Analog Keeper
+            </div>
+
+            <div class="nav-buttons">
+                <button class="nav-button" onclick="goToSegment(3)">Continue →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEGMENT 3: The Digital Revolution -->
+    <section class="section" id="segment3" data-segment="3">
+        <div class="content-wrapper">
+            <h2 class="section-title">The Digital Revolution</h2>
+            
+            <p class="section-text">
+                Then digital recording arrived.<br/>
+                Infinite takes. Perfect editing. Auto-Tune. Unlimited tracks.
+            </p>
+
+            <p class="section-text">
+                Everything became possible.<br/>
+                Which made nothing feel necessary.
+            </p>
+
+            <div class="waveform-label">2015 • Digital • Compressed</div>
+            <div class="waveform-canvas">
+                <svg class="waveform-svg" viewBox="0 0 800 120">
+                    <path class="waveform-compressed" id="wave2" d=""/>
+                </svg>
+            </div>
+
+            <p class="section-text">
+                In the 1990s, producers discovered: Louder music grabs attention.<br/>
+                So they compressed the audio. Made everything... the same volume.
+            </p>
+
+            <div class="interactive-card">
+                <div class="interactive-question">Which describes your life's waveform?</div>
+                <div class="option-cards" id="waveformOptions">
+                    <div class="option-card" data-waveform="dynamic">
+                        <strong>A) Dynamic</strong><br/>
+                        Clear peaks and valleys<br/>
+                        Room to breathe
+                    </div>
+                    <div class="option-card" data-waveform="compressed">
+                        <strong>B) Compressed</strong><br/>
+                        Everything same intensity<br/>
+                        Constant stimulation
+                    </div>
+                    <div class="option-card" data-waveform="clipping">
+                        <strong>C) Clipping</strong><br/>
+                        System overloaded<br/>
+                        Breaking down
+                    </div>
+                </div>
+            </div>
+
+            <div class="protip-card" id="protip2">
+                <div class="protip-label">PRO TIP #2 UNLOCKED</div>
+                <div class="protip-text" id="protip2Text"></div>
+            </div>
+
+            <div class="badge-earned" id="badge2" style="opacity: 0;">
+                📈 Badge Earned: The Waveform Reader
+            </div>
+
+            <div class="nav-buttons">
+                <button class="nav-button" onclick="goToSegment(2)">← Back</button>
+                <button class="nav-button" onclick="goToSegment(4)">Continue →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEGMENT 4: The Loudness War (DRAMATIC DARK SECTION) -->
+    <section class="section" id="segment4" data-segment="4">
+        <div class="content-wrapper">
+            <h2 class="section-title">THE LOUDNESS WAR</h2>
+            
+            <p class="section-text">
+                Everyone had to compete.<br/>
+                Compress more. Louder. Louder. Louder.
+            </p>
+
+            <div class="vu-meter-container">
+                <div class="vu-meter">
+                    <div class="vu-meter-bg"></div>
+                    <div class="vu-needle"></div>
+                    <svg class="vu-scale" viewBox="0 0 350 350">
+                        <line x1="175" y1="175" x2="175" y2="145" stroke="rgba(255,248,240,0.3)" stroke-width="2" transform="rotate(-60 175 175)"/>
+                        <line x1="175" y1="175" x2="175" y2="145" stroke="rgba(255,248,240,0.3)" stroke-width="2" transform="rotate(-30 175 175)"/>
+                        <line x1="175" y1="175" x2="175" y2="145" stroke="rgba(255,248,240,0.4)" stroke-width="2" transform="rotate(0 175 175)"/>
+                        <line x1="175" y1="175" x2="175" y2="145" stroke="rgba(212,165,116,0.6)" stroke-width="3" transform="rotate(30 175 175)"/>
+                        <line x1="175" y1="175" x2="175" y2="145" stroke="rgba(198,107,84,0.8)" stroke-width="3" transform="rotate(60 175 175)"/>
+                    </svg>
+                </div>
+            </div>
+
+            <p class="section-text">
+                By the 2000s:<br/>
+                Music was technically the loudest it had ever been.<br/>
+                Emotionally the flattest it had ever felt.
+            </p>
+
+            <div class="badge-earned" id="badge3" style="opacity: 1; margin-top: 3rem;">
+                ⚠️ Badge Earned: The Witness
+            </div>
+
+            <div class="nav-buttons">
+                <button class="nav-button" onclick="goToSegment(3)">← Back</button>
+                <button class="nav-button" onclick="goToSegment(5)">Continue →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEGMENT 5: The Beautiful Mistake -->
+    <section class="section" id="segment5" data-segment="5">
+        <div class="content-wrapper">
+            <h2 class="section-title">The Beautiful Mistake</h2>
+            
+            <p class="section-text">
+                1977. Los Angeles. Fleetwood Mac books Sound City Studios.
+            </p>
+
+            <p class="section-text">
+                Engineer Ken Caillat hears the drums in the room.<br/>
+                They sound huge. Naturally compressed. Ambient. Powerful.<br/>
+                But wrong. By the rules.
+            </p>
+
+            <p class="section-text">
+                He could have fixed it. Dampened the room. Made it 'correct.'<br/>
+                Instead, he leaned into it.
+            </p>
+
+            <p class="section-text" style="font-size: clamp(1.2rem, 3vw, 1.8rem); font-weight: 600; margin: 3rem 0;">
+                40 million copies sold.<br/>
+                The drum sound became iconic.
+            </p>
+
+            <p class="section-text">
+                Tom Petty heard it. Booked the same studio.<br/>
+                Then Nirvana. Then hundreds of others.<br/>
+                Sound City became legendary.
+            </p>
+
+            <p class="section-text">
+                Not because the room was perfect.<br/>
+                Because the room had character.
+            </p>
+
+            <!-- Studio Room Art -->
+            <div class="visual-art">
+                <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Room perspective -->
+                    <defs>
+                        <linearGradient id="roomGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#E8D5D8;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#D4A574;stop-opacity:0.5" />
+                        </linearGradient>
+                    </defs>
+                    
+                    <!-- Back wall -->
+                    <rect x="50" y="30" width="400" height="200" fill="url(#roomGradient)" opacity="0.3"/>
+                    
+                    <!-- Acoustic foam panels (geometric) -->
+                    <g opacity="0.6">
+                        <rect x="80" y="60" width="60" height="60" fill="#8B4558" opacity="0.4"/>
+                        <rect x="160" y="60" width="60" height="60" fill="#C66B54" opacity="0.4"/>
+                        <rect x="240" y="60" width="60" height="60" fill="#8B4558" opacity="0.4"/>
+                        <rect x="320" y="60" width="60" height="60" fill="#C66B54" opacity="0.4"/>
+                        
+                        <rect x="80" y="140" width="60" height="60" fill="#C66B54" opacity="0.4"/>
+                        <rect x="160" y="140" width="60" height="60" fill="#8B4558" opacity="0.4"/>
+                        <rect x="240" y="140" width="60" height="60" fill="#C66B54" opacity="0.4"/>
+                        <rect x="320" y="140" width="60" height="60" fill="#8B4558" opacity="0.4"/>
+                    </g>
+                    
+                    <!-- Drum kit silhouette (front) -->
+                    <g transform="translate(250, 200)">
+                        <ellipse cx="0" cy="20" rx="50" ry="15" fill="#3D2E29" opacity="0.5"/>
+                        <circle cx="0" cy="0" r="40" fill="none" stroke="#3D2E29" stroke-width="3" opacity="0.6"/>
+                        <circle cx="-40" cy="-20" r="25" fill="none" stroke="#3D2E29" stroke-width="2" opacity="0.6"/>
+                        <circle cx="40" cy="-20" r="25" fill="none" stroke="#3D2E29" stroke-width="2" opacity="0.6"/>
+                    </g>
+                    
+                    <!-- Sound waves emanating -->
+                    <g opacity="0.3">
+                        <circle cx="250" cy="200" r="60" fill="none" stroke="#C66B54" stroke-width="1"/>
+                        <circle cx="250" cy="200" r="80" fill="none" stroke="#C66B54" stroke-width="1"/>
+                        <circle cx="250" cy="200" r="100" fill="none" stroke="#C66B54" stroke-width="1"/>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="interactive-card">
+                <div class="interactive-question">What quality about yourself do you try to 'fix' that might actually be your sound?</div>
+                <input type="text" class="text-input" id="drumRoomInput" placeholder="I'm too..."/>
+            </div>
+
+            <div class="protip-card" id="protip3">
+                <div class="protip-label">PRO TIP #3 UNLOCKED</div>
+                <div class="protip-text">"The room wasn't broken. It just wasn't standard. Your 'problems' might be the same—not bugs, just your frequency."</div>
+            </div>
+
+            <div class="badge-earned" id="badge4" style="opacity: 0;">
+                🎛️ Badge Earned: The Sound Engineer
+            </div>
+
+            <div class="nav-buttons">
+                <button class="nav-button" onclick="goToSegment(4)">← Back</button>
+                <button class="nav-button" onclick="goToSegment(6)">Continue →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEGMENT 6: The Loop That Ate The Break -->
+    <section class="section" id="segment6" data-segment="6">
+        <div class="content-wrapper">
+            <h2 class="section-title">The Loop That Ate The Break</h2>
+            
+            <p class="section-text">
+                Modern music production loves loops.<br/>
+                But here's what matters: The break.
+            </p>
+
+            <p class="section-text">
+                1969. A drummer named Gregory Coleman played a 7-second solo.<br/>
+                It's called the Amen Break.<br/>
+                It became the most sampled drum break in history.
+            </p>
+
+            <p class="section-text">
+                Why? Because it had perfect tension and release.<br/>
+                Perfect interruption and return.<br/>
+                The break made the loop meaningful.
+            </p>
+
+            <p class="section-text">
+                Your daily loop:<br/>
+                Wake → Check phone → Work → Scroll → Sleep → Repeat
+            </p>
+
+            <p class="section-text" style="font-weight: 600;">
+                Where's the break?
+            </p>
+
+            <!-- Loop Visualization Art -->
+            <div class="visual-art">
+                <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Main loop circle -->
+                    <circle cx="250" cy="150" r="100" fill="none" stroke="#8B4558" stroke-width="3" opacity="0.6" class="loop-element"/>
+                    
+                    <!-- Loop segments (representing daily cycle) -->
+                    <g opacity="0.7">
+                        <path d="M 250,50 A 100,100 0 0,1 350,150" fill="none" stroke="#C66B54" stroke-width="8" stroke-dasharray="5,5"/>
+                        <path d="M 350,150 A 100,100 0 0,1 250,250" fill="none" stroke="#C66B54" stroke-width="8" stroke-dasharray="5,5"/>
+                        <path d="M 250,250 A 100,100 0 0,1 150,150" fill="none" stroke="#C66B54" stroke-width="8" stroke-dasharray="5,5"/>
+                        <path d="M 150,150 A 100,100 0 0,1 250,50" fill="none" stroke="#C66B54" stroke-width="8" stroke-dasharray="5,5"/>
+                    </g>
+                    
+                    <!-- Activity labels around loop -->
+                    <text x="250" y="35" text-anchor="middle" fill="#3D2E29" font-size="12" opacity="0.6">WAKE</text>
+                    <text x="375" y="155" text-anchor="middle" fill="#3D2E29" font-size="12" opacity="0.6">WORK</text>
+                    <text x="250" y="280" text-anchor="middle" fill="#3D2E29" font-size="12" opacity="0.6">SCROLL</text>
+                    <text x="125" y="155" text-anchor="middle" fill="#3D2E29" font-size="12" opacity="0.6">SLEEP</text>
+                    
+                    <!-- The missing break (gap in circle) -->
+                    <path d="M 245,50 L 245,30 L 255,30 L 255,50" fill="#D4A574" opacity="0.8"/>
+                    <text x="250" y="20" text-anchor="middle" fill="#8B4558" font-size="10" font-weight="600">THE BREAK</text>
+                    <text x="250" y="15" text-anchor="middle" fill="#8B4558" font-size="18">↓</text>
+                    
+                    <!-- Center dot (you) -->
+                    <circle cx="250" cy="150" r="5" fill="#8B4558"/>
+                    <text x="250" y="175" text-anchor="middle" fill="#3D2E29" font-size="10" opacity="0.5">YOU</text>
+                </svg>
+            </div>
+
+            <div class="interactive-card">
+                <div class="interactive-question">What used to interrupt your loop but doesn't anymore?</div>
+                <div class="option-cards" id="breakOptions">
+                    <div class="option-card" data-break="walks">Walks without headphones</div>
+                    <div class="option-card" data-break="weekends">Offline weekends</div>
+                    <div class="option-card" data-break="boredom">Time to be bored</div>
+                    <div class="option-card" data-break="unproductive">Unproductive moments</div>
+                </div>
+            </div>
+
+            <div class="protip-card" id="protip4">
+                <div class="protip-label">PRO TIP #4 UNLOCKED</div>
+                <div class="protip-text">"The break isn't laziness. The break is where the music breathes. Without it, the loop becomes a cage."</div>
+            </div>
+
+            <div class="badge-earned" id="badge5" style="opacity: 0;">
+                🔁 Badge Earned: The Loop Breaker
+            </div>
+
+            <div class="nav-buttons">
+                <button class="nav-button" onclick="goToSegment(5)">← Back</button>
+                <button class="nav-button" onclick="goToSegment(7)">Continue →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEGMENT 7: Perfecting Toward What? -->
+    <section class="section" id="segment7" data-segment="7">
+        <div class="content-wrapper">
+            <h2 class="section-title">Perfecting Toward What?</h2>
+            
+            <p class="section-text">
+                Donald Fagen. Walter Becker. Steely Dan.<br/>
+                Legendary perfectionists.
+            </p>
+
+            <p class="section-text">
+                They recorded one guitar solo 50+ times.<br/>
+                Hired the best jazz session musicians in the world.<br/>
+                Spent months on single albums.
+            </p>
+
+            <p class="section-text">
+                1977: Aja.<br/>
+                It still sounds better than most music recorded today.
+            </p>
+
+            <p class="section-text" style="font-weight: 600; margin: 3rem 0;">
+                How? They knew exactly what they were perfecting toward.
+            </p>
+
+            <p class="section-text">
+                You're optimizing your life.<br/>
+                Morning routine: Optimized.<br/>
+                Inbox zero: Achieved.<br/>
+                Habits tracked: Complete.
+            </p>
+
+            <p class="section-text" style="font-weight: 600;">
+                But optimized toward what?
+            </p>
+
+            <!-- Precision Geometry Art (Steely Dan style) -->
+            <div class="visual-art">
+                <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Grid background -->
+                    <defs>
+                        <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#D4A574" stroke-width="0.5" opacity="0.3"/>
+                        </pattern>
+                    </defs>
+                    <rect width="500" height="300" fill="url(#grid)"/>
+                    
+                    <!-- Precise geometric construction -->
+                    <g opacity="0.7">
+                        <!-- Base circle -->
+                        <circle cx="250" cy="150" r="80" fill="none" stroke="#8B4558" stroke-width="2" class="precision-line"/>
+                        
+                        <!-- Perfect triangle inscribed -->
+                        <path d="M 250,70 L 319.28,190 L 180.72,190 Z" fill="none" stroke="#C66B54" stroke-width="2" class="precision-line" style="animation-delay: 0.5s;"/>
+                        
+                        <!-- Center lines (precision measurement) -->
+                        <line x1="250" y1="70" x2="250" y2="230" stroke="#D4A574" stroke-width="1" class="precision-line" style="animation-delay: 1s;"/>
+                        <line x1="170" y1="150" x2="330" y2="150" stroke="#D4A574" stroke-width="1" class="precision-line" style="animation-delay: 1.2s;"/>
+                        
+                        <!-- Measurement marks -->
+                        <circle cx="250" cy="70" r="3" fill="#C66B54"/>
+                        <circle cx="319.28" cy="190" r="3" fill="#C66B54"/>
+                        <circle cx="180.72" cy="190" r="3" fill="#C66B54"/>
+                        <circle cx="250" cy="150" r="3" fill="#8B4558"/>
+                    </g>
+                    
+                    <!-- Question mark at center -->
+                    <text x="250" y="165" text-anchor="middle" fill="#8B4558" font-size="60" font-weight="300" opacity="0.4">?</text>
+                </svg>
+            </div>
+
+            <div class="interactive-card">
+                <div class="interactive-question">What are you perfecting toward? (Not "what" are you optimizing, but "why"?)</div>
+                <input type="text" class="text-input" id="visionInput" placeholder="I'm perfecting toward..."/>
+            </div>
+
+            <div class="protip-card" id="protip5">
+                <div class="protip-label">PRO TIP #5 UNLOCKED</div>
+                <div class="protip-text">"Efficiency is meaningless without direction. Steely Dan took 300 hours because they knew exactly where they were going."</div>
+            </div>
+
+            <div class="badge-earned" id="badge6" style="opacity: 0;">
+                🎯 Badge Earned: The Vision Keeper
+            </div>
+
+            <div class="nav-buttons">
+                <button class="nav-button" onclick="goToSegment(6)">← Back</button>
+                <button class="nav-button" onclick="goToSegment(8)">Continue →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEGMENT 8: The Vinyl Return -->
+    <section class="section" id="segment8" data-segment="8">
+        <div class="content-wrapper">
+            <h2 class="section-title">The Vinyl Return</h2>
+            
+            <p class="section-text">
+                Something interesting happened.<br/>
+                In 2020, vinyl sales surpassed CDs for the first time since 1986.
+            </p>
+
+            <p class="section-text">
+                Vinyl is objectively worse technology:<br/>
+                Scratches, pops, can't skip tracks, costs more.
+            </p>
+
+            <p class="section-text" style="font-weight: 600;">
+                So why choose it?
+            </p>
+
+            <p class="section-text">
+                People were choosing:<br/>
+                Friction • Commitment • Presence • Imperfection • Ritual
+            </p>
+
+            <p class="section-text">
+                People are hungry for constraints.<br/>
+                Hungry for imperfection.<br/>
+                Hungry for something real.
+            </p>
+
+            <p class="section-text" style="margin: 3rem 0; font-size: clamp(1.1rem, 2.5vw, 1.5rem); line-height: 2.2;">
+                The loudness war ended when someone turned down the volume.<br/>
+                Not because they gave up.<br/>
+                But because they remembered what music sounded like.
+            </p>
+
+            <!-- Vinyl Return Art -->
+            <div class="visual-art">
+                <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Turntable platter -->
+                    <circle cx="200" cy="150" r="90" fill="#2C1810" opacity="0.8"/>
+                    
+                    <!-- Vinyl grooves -->
+                    <g opacity="0.4">
+                        <circle cx="200" cy="150" r="85" fill="none" stroke="#C66B54" stroke-width="0.5"/>
+                        <circle cx="200" cy="150" r="75" fill="none" stroke="#C66B54" stroke-width="0.5"/>
+                        <circle cx="200" cy="150" r="65" fill="none" stroke="#C66B54" stroke-width="0.5"/>
+                        <circle cx="200" cy="150" r="55" fill="none" stroke="#C66B54" stroke-width="0.5"/>
+                        <circle cx="200" cy="150" r="45" fill="none" stroke="#C66B54" stroke-width="0.5"/>
+                        <circle cx="200" cy="150" r="35" fill="none" stroke="#C66B54" stroke-width="0.5"/>
+                    </g>
+                    
+                    <!-- Center label -->
+                    <circle cx="200" cy="150" r="20" fill="#D4A574" opacity="0.6"/>
+                    <circle cx="200" cy="150" r="6" fill="#8B4558"/>
+                    
+                    <!-- Tonearm -->
+                    <g transform="rotate(-35 350 100)">
+                        <rect x="300" y="95" width="100" height="8" fill="#5C4A45" rx="4" opacity="0.7"/>
+                        <circle cx="405" cy="99" r="5" fill="#8B4558"/>
+                        <circle cx="300" cy="99" r="8" fill="#5C4A45" opacity="0.5"/>
+                    </g>
+                    
+                    <!-- Stylus touching vinyl -->
+                    <circle cx="245" cy="110" r="2" fill="#C66B54"/>
+                    
+                    <!-- Sound wave emanating from stylus -->
+                    <g opacity="0.3">
+                        <path d="M 245,110 Q 280,90 320,80" fill="none" stroke="#C66B54" stroke-width="1.5"/>
+                        <path d="M 245,110 Q 280,100 320,95" fill="none" stroke="#C66B54" stroke-width="1.5"/>
+                        <path d="M 245,110 Q 280,110 320,110" fill="none" stroke="#C66B54" stroke-width="1.5"/>
+                    </g>
+                    
+                    <!-- "RETURN" text -->
+                    <text x="380" y="180" text-anchor="middle" fill="#8B4558" font-size="24" font-weight="600" opacity="0.5">RETURN</text>
+                </svg>
+            </div>
+
+            <div class="interactive-card">
+                <div class="interactive-question">What's one frequency you'll tune to this week?</div>
+                <input type="text" class="text-input" id="frequencyInput" placeholder="One thing I'll do differently..."/>
+            </div>
+
+            <div class="protip-card" id="protip6">
+                <div class="protip-label">PRO TIP #6 UNLOCKED • MASTER INSIGHT</div>
+                <div class="protip-text">"The loop breaks when you stop feeding it. The compression releases when you let things be quiet. The Auto-Tune turns off when you risk the wrong note."</div>
+            </div>
+
+            <div class="badge-earned" id="badge7" style="opacity: 0;">
+                🎵 Master Badge Earned: THE FREQUENCY FINDER
+            </div>
+
+            <div class="nav-buttons">
+                <button class="nav-button" onclick="goToSegment(7)">← Back</button>
+                <button class="nav-button" onclick="goToSegment(9)">Complete Episode →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPLETION DASHBOARD -->
+    <section class="section" id="segment9" data-segment="9">
+        <div class="content-wrapper">
+            <h2 class="section-title">YOU'VE FOUND YOUR FREQUENCY</h2>
+            
+            <div class="completion-stats">
+                <div class="stat-card">
+                    <div class="stat-number">7/7</div>
+                    <div class="stat-label">Segments Complete</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Pro Tips Unlocked</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="interactionCount">0</div>
+                    <div class="stat-label">Interactions</div>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1.5rem; margin: 3rem 0 2rem; color: #3D2E29;">Your Badge Collection</h3>
+            
+            <div class="badge-collection">
+                <div class="badge-item">
+                    <div class="badge-icon">🎚️</div>
+                    <div class="badge-name">The Analog Keeper</div>
+                </div>
+                <div class="badge-item">
+                    <div class="badge-icon">📈</div>
+                    <div class="badge-name">The Waveform Reader</div>
+                </div>
+                <div class="badge-item">
+                    <div class="badge-icon">⚠️</div>
+                    <div class="badge-name">The Witness</div>
+                </div>
+                <div class="badge-item">
+                    <div class="badge-icon">🎛️</div>
+                    <div class="badge-name">The Sound Engineer</div>
+                </div>
+                <div class="badge-item">
+                    <div class="badge-icon">🔁</div>
+                    <div class="badge-name">The Loop Breaker</div>
+                </div>
+                <div class="badge-item">
+                    <div class="badge-icon">🎯</div>
+                    <div class="badge-name">The Vision Keeper</div>
+                </div>
+                <div class="badge-item" style="border-color: #C66B54; border-width: 3px;">
+                    <div class="badge-icon">🎵</div>
+                    <div class="badge-name" style="font-weight: 700; color: #C66B54;">THE FREQUENCY FINDER</div>
+                </div>
+            </div>
+
+            <div style="margin: 4rem 0; max-width: 700px; margin-left: auto; margin-right: auto;">
+                <p class="section-text">
+                    You came in listening to a loop at maximum volume.<br/>
+                    You leave understanding the patterns.
+                </p>
+                <p class="section-text">
+                    The music is still playing.<br/>
+                    But now you know it's a loop.<br/>
+                    And loops can be broken.
+                </p>
+                
+                <!-- Experience Again Button -->
+                <button class="nav-button" onclick="replayEpisode()" style="margin-top: 3rem; font-size: 1.1rem; padding: 1.5rem 3rem;">
+                    ↻ Experience Again
+                </button>
+                
+                <!-- Download Responses Button -->
+                <button class="nav-button" onclick="downloadResponses()" style="margin-top: 1rem; font-size: 1.1rem; padding: 1.5rem 3rem; background: rgba(212, 165, 116, 0.2); border-color: rgba(212, 165, 116, 0.4);">
+                    ⬇ Download My Responses
+                </button>
+                
+                <!-- Privacy Notice -->
+                <div style="margin-top: 3rem; padding: 1.5rem; background: rgba(140, 69, 88, 0.05); border-radius: 8px; border: 1px solid rgba(140, 69, 88, 0.15);">
+                    <p style="font-size: 0.85rem; line-height: 1.8; color: #5C4A45; opacity: 0.8;">
+                        <strong style="color: #8B4558;">Privacy Note:</strong> Your responses are stored only in your browser during this session. 
+                        No data is collected, transmitted, or stored on any server. When you close this page, your responses are gone. 
+                        Use the download button above to save a personal copy if desired.
+                    </p>
+                </div>
+            </div>
+
+            <div style="margin: 3rem 0; padding: 2rem; background: rgba(198, 107, 84, 0.1); border-radius: 12px;">
+                <p style="font-size: 0.9rem; opacity: 0.7; line-height: 1.8;">
+                    THE FREQUENCY • Episode 001: The Loudness War<br/>
+                    © FORTEEN 2026 • FORTEEN MIND LABS<br/>
+                    More episodes coming soon
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // State Management
+        let currentSegment = 1;
+        let interactionCount = 0;
+        const userData = {
+            analog: null,
+            waveform: null,
+            drumRoom: null,
+            break: null,
+            vision: null,
+            frequency: null
+        };
+
+        // Audio Engine with Musical Character
+        class FrequencyAudio {
+            constructor() {
+                this.context = null;
+                this.oscillators = [];
+                this.enabled = true;
+                this.initialized = false;
+                this.masterGain = null;
+            }
+
+            init() {
+                if (this.initialized) return;
+                this.context = new (window.AudioContext || window.webkitAudioContext)();
+                this.masterGain = this.context.createGain();
+                this.masterGain.connect(this.context.destination);
+                this.masterGain.gain.value = 1;
+                this.initialized = true;
+                
+                // Start with warm analog drone
+                this.createAnalogDrone();
+            }
+
+            // Warm analog bass drone (like a Rhodes or warm synth)
+            createAnalogDrone() {
+                if (!this.context) return;
+                
+                // Root note (A1 = 55Hz)
+                const root = this.createVoice(55, 'triangle', 0.04);
+                
+                // Fifth (E2 = 82.5Hz)
+                const fifth = this.createVoice(82.5, 'triangle', 0.025);
+                
+                // Add slight detuning for warmth
+                const detuned = this.createVoice(55.5, 'triangle', 0.02);
+                
+                this.oscillators.push(root, fifth, detuned);
+            }
+
+            // Create individual voice with envelope
+            createVoice(frequency, type, volume, fadeIn = 3) {
+                if (!this.context) return;
+                
+                const osc = this.context.createOscillator();
+                const gain = this.context.createGain();
+                const filter = this.context.createBiquadFilter();
+                
+                osc.frequency.value = frequency;
+                osc.type = type; // 'sine', 'triangle', 'sawtooth'
+                
+                // Gentle lowpass for warmth
+                filter.type = 'lowpass';
+                filter.frequency.value = 800;
+                filter.Q.value = 0.5;
+                
+                gain.gain.value = 0;
+                if (this.enabled) {
+                    gain.gain.linearRampToValueAtTime(volume, this.context.currentTime + fadeIn);
+                }
+                
+                osc.connect(filter);
+                filter.connect(gain);
+                gain.connect(this.masterGain);
+                
+                osc.start();
+                
+                return { osc, gain, filter, targetVolume: volume };
+            }
+
+            // Snare hit (white noise burst + body)
+            playSnare() {
+                if (!this.context || !this.enabled) return;
+                
+                const now = this.context.currentTime;
+                
+                // WHITE NOISE (snare wire sound)
+                const bufferSize = this.context.sampleRate * 0.2;
+                const buffer = this.context.createBuffer(1, bufferSize, this.context.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = Math.random() * 2 - 1;
+                }
+                
+                const noise = this.context.createBufferSource();
+                noise.buffer = buffer;
+                
+                const noiseGain = this.context.createGain();
+                const noiseFilter = this.context.createBiquadFilter();
+                
+                // Band-pass for snare crack (not just high-pass)
+                noiseFilter.type = 'bandpass';
+                noiseFilter.frequency.value = 3000;
+                noiseFilter.Q.value = 1.5;
+                
+                // Louder, sharper envelope
+                noiseGain.gain.setValueAtTime(0.5, now); // Much louder
+                noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+                
+                noise.connect(noiseFilter);
+                noiseFilter.connect(noiseGain);
+                noiseGain.connect(this.masterGain);
+                
+                noise.start(now);
+                noise.stop(now + 0.2);
+                
+                // BODY TONE (drum shell resonance)
+                const body = this.context.createOscillator();
+                const bodyGain = this.context.createGain();
+                const bodyFilter = this.context.createBiquadFilter();
+                
+                body.frequency.value = 180; // Snare body tone
+                body.type = 'triangle';
+                
+                bodyFilter.type = 'lowpass';
+                bodyFilter.frequency.value = 400;
+                
+                bodyGain.gain.setValueAtTime(0.3, now);
+                bodyGain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+                
+                body.connect(bodyFilter);
+                bodyFilter.connect(bodyGain);
+                bodyGain.connect(this.masterGain);
+                
+                body.start(now);
+                body.stop(now + 0.15);
+            }
+
+            // Drum roll (multiple snare hits in quick succession)
+            playDrumRoll() {
+                if (!this.context || !this.enabled) return;
+                
+                const now = this.context.currentTime;
+                const rollDuration = 0.8; // Total roll time
+                const hits = 8; // Number of hits
+                const interval = rollDuration / hits;
+                
+                for (let i = 0; i < hits; i++) {
+                    const hitTime = now + (i * interval);
+                    const volume = 0.3 + (i / hits) * 0.3; // Crescendo
+                    
+                    // White noise hit
+                    const bufferSize = this.context.sampleRate * 0.08;
+                    const buffer = this.context.createBuffer(1, bufferSize, this.context.sampleRate);
+                    const data = buffer.getChannelData(0);
+                    for (let j = 0; j < bufferSize; j++) {
+                        data[j] = Math.random() * 2 - 1;
+                    }
+                    
+                    const noise = this.context.createBufferSource();
+                    noise.buffer = buffer;
+                    
+                    const gain = this.context.createGain();
+                    const filter = this.context.createBiquadFilter();
+                    
+                    filter.type = 'bandpass';
+                    filter.frequency.value = 3000;
+                    filter.Q.value = 1.5;
+                    
+                    gain.gain.setValueAtTime(volume, hitTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, hitTime + 0.08);
+                    
+                    noise.connect(filter);
+                    filter.connect(gain);
+                    gain.connect(this.masterGain);
+                    
+                    noise.start(hitTime);
+                    noise.stop(hitTime + 0.08);
+                }
+            }
+
+            // Plucked string (like guitar or bass)
+            playPluck(frequency = 220) {
+                if (!this.context || !this.enabled) return;
+                
+                const now = this.context.currentTime;
+                
+                const osc = this.context.createOscillator();
+                const gain = this.context.createGain();
+                const filter = this.context.createBiquadFilter();
+                
+                osc.frequency.value = frequency;
+                osc.type = 'sawtooth'; // Rich harmonics
+                
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(3000, now);
+                filter.frequency.exponentialRampToValueAtTime(800, now + 0.5);
+                filter.Q.value = 2;
+                
+                // Pluck envelope: instant attack, exponential decay
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+                
+                osc.connect(filter);
+                filter.connect(gain);
+                gain.connect(this.masterGain);
+                
+                osc.start(now);
+                osc.stop(now + 1.2);
+            }
+
+            // Chord (multiple notes at once)
+            playChord(root = 220, type = 'major') {
+                if (!this.context || !this.enabled) return;
+                
+                let notes = [];
+                if (type === 'major') {
+                    notes = [root, root * 1.25, root * 1.5]; // Major triad
+                } else if (type === 'minor') {
+                    notes = [root, root * 1.2, root * 1.5]; // Minor triad
+                } else if (type === 'sus') {
+                    notes = [root, root * 1.33, root * 1.5]; // Sus4
+                }
+                
+                const now = this.context.currentTime;
+                
+                notes.forEach(freq => {
+                    const osc = this.context.createOscillator();
+                    const gain = this.context.createGain();
+                    
+                    osc.frequency.value = freq;
+                    osc.type = 'triangle'; // Soft, warm
+                    
+                    gain.gain.setValueAtTime(0, now);
+                    gain.gain.linearRampToValueAtTime(0.04, now + 0.3);
+                    gain.gain.linearRampToValueAtTime(0, now + 2.5);
+                    
+                    osc.connect(gain);
+                    gain.connect(this.masterGain);
+                    
+                    osc.start(now);
+                    osc.stop(now + 2.5);
+                });
+            }
+
+            // Deep bass hit
+            playBassHit(frequency = 55) {
+                if (!this.context || !this.enabled) return;
+                
+                const now = this.context.currentTime;
+                
+                const osc = this.context.createOscillator();
+                const gain = this.context.createGain();
+                
+                osc.frequency.value = frequency;
+                osc.type = 'sine';
+                
+                // Punchy envelope
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+                
+                osc.connect(gain);
+                gain.connect(this.masterGain);
+                
+                osc.start(now);
+                osc.stop(now + 0.8);
+            }
+
+            // Kick drum (punchy low frequency)
+            playKick() {
+                if (!this.context || !this.enabled) return;
+                
+                const now = this.context.currentTime;
+                
+                const osc = this.context.createOscillator();
+                const gain = this.context.createGain();
+                
+                // Pitch drop from 150Hz to 40Hz for kick character
+                osc.frequency.setValueAtTime(150, now);
+                osc.frequency.exponentialRampToValueAtTime(40, now + 0.1);
+                osc.type = 'sine';
+                
+                gain.gain.setValueAtTime(0.4, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+                
+                osc.connect(gain);
+                gain.connect(this.masterGain);
+                
+                osc.start(now);
+                osc.stop(now + 0.5);
+            }
+
+            // Tom drum (mid frequency punch)
+            playTom(frequency = 110) {
+                if (!this.context || !this.enabled) return;
+                
+                const now = this.context.currentTime;
+                
+                const osc = this.context.createOscillator();
+                const gain = this.context.createGain();
+                
+                osc.frequency.value = frequency;
+                osc.type = 'triangle';
+                
+                gain.gain.setValueAtTime(0.3, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+                
+                osc.connect(gain);
+                gain.connect(this.masterGain);
+                
+                osc.start(now);
+                osc.stop(now + 0.4);
+            }
+
+            // Cymbal crash
+            playCymbal() {
+                if (!this.context || !this.enabled) return;
+                
+                const now = this.context.currentTime;
+                
+                const bufferSize = this.context.sampleRate * 1.5;
+                const buffer = this.context.createBuffer(1, bufferSize, this.context.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.3));
+                }
+                
+                const noise = this.context.createBufferSource();
+                noise.buffer = buffer;
+                
+                const gain = this.context.createGain();
+                const filter = this.context.createBiquadFilter();
+                
+                filter.type = 'highpass';
+                filter.frequency.value = 5000;
+                
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 1.5);
+                
+                noise.connect(filter);
+                filter.connect(gain);
+                gain.connect(this.masterGain);
+                
+                noise.start(now);
+                noise.stop(now + 1.5);
+            }
+
+            // Melodic sequence (ascending notes)
+            playAscend() {
+                if (!this.context || !this.enabled) return;
+                
+                const notes = [220, 247, 277, 330]; // A, B, C#, E
+                const now = this.context.currentTime;
+                
+                notes.forEach((freq, i) => {
+                    const osc = this.context.createOscillator();
+                    const gain = this.context.createGain();
+                    
+                    osc.frequency.value = freq;
+                    osc.type = 'triangle';
+                    
+                    const startTime = now + (i * 0.15);
+                    gain.gain.setValueAtTime(0, startTime);
+                    gain.gain.linearRampToValueAtTime(0.08, startTime + 0.02);
+                    gain.gain.linearRampToValueAtTime(0, startTime + 0.2);
+                    
+                    osc.connect(gain);
+                    gain.connect(this.masterGain);
+                    
+                    osc.start(startTime);
+                    osc.stop(startTime + 0.25);
+                });
+            }
+
+            // Short blip (text input feedback)
+            playBlip(frequency = 880) {
+                if (!this.context || !this.enabled) return;
+                
+                const now = this.context.currentTime;
+                
+                const osc = this.context.createOscillator();
+                const gain = this.context.createGain();
+                
+                osc.frequency.value = frequency;
+                osc.type = 'sine';
+                
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+                
+                osc.connect(gain);
+                gain.connect(this.masterGain);
+                
+                osc.start(now);
+                osc.stop(now + 0.08);
+            }
+
+            toggle() {
+                this.enabled = !this.enabled;
+                const time = this.context.currentTime;
+                
+                this.oscillators.forEach(({ gain, targetVolume }) => {
+                    gain.gain.cancelScheduledValues(time);
+                    gain.gain.setValueAtTime(gain.gain.value, time);
+                    gain.gain.linearRampToValueAtTime(this.enabled ? targetVolume : 0, time + 0.5);
+                });
+                
+                return this.enabled;
+            }
+        }
+
+        const audio = new FrequencyAudio();
+
+        // Audio toggle
+        document.getElementById('audioToggle').addEventListener('click', () => {
+            if (!audio.initialized) audio.init();
+            const enabled = audio.toggle();
+            document.getElementById('audioToggle').textContent = enabled ? '🔊' : '🔇';
+        });
+
+        document.addEventListener('click', () => {
+            if (!audio.initialized) audio.init();
+        }, { once: true });
+
+        // Navigation
+        function goToSegment(n) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(`segment${n}`).classList.add('active');
+            
+            // Play navigation sound (going forward vs backward)
+            if (audio.initialized && n !== currentSegment) {
+                if (n > currentSegment) {
+                    audio.playBlip(550); // Forward - lower pitch
+                } else {
+                    audio.playBlip(440); // Backward - even lower
+                }
+            }
+            
+            currentSegment = n;
+            window.scrollTo(0, 0);
+            updateProgress();
+            
+            // Musical punctuation based on segment
+            if (audio.initialized) {
+                if (n === 4) {
+                    // Deep bass hit entering dark section
+                    setTimeout(() => audio.playBassHit(41), 100); // Low E
+                } else if (n === 8) {
+                    // Hopeful chord entering return section
+                    setTimeout(() => audio.playChord(165, 'major'), 500); // E3 major
+                } else if (n === 9) {
+                    // Completion fanfare
+                    setTimeout(() => audio.playCymbal(), 300);
+                }
+            }
+        }
+
+        function replayEpisode() {
+            // Reset state
+            interactionCount = 0;
+            userData.analog = null;
+            userData.waveform = null;
+            userData.drumRoom = null;
+            userData.break = null;
+            userData.vision = null;
+            userData.frequency = null;
+            
+            // Clear selections
+            document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
+            document.querySelectorAll('.text-input').forEach(input => input.value = '');
+            document.querySelectorAll('.protip-card').forEach(tip => tip.classList.remove('revealed'));
+            document.querySelectorAll('.badge-earned').forEach(badge => badge.style.opacity = '0');
+            
+            // Play drum roll and return to start
+            if (audio.initialized) {
+                audio.playDrumRoll();
+                setTimeout(() => goToSegment(1), 1000);
+            } else {
+                goToSegment(1);
+            }
+        }
+
+        function downloadResponses() {
+            // Play download sound
+            if (audio.initialized) audio.playAscend();
+            
+            // Create text content
+            const date = new Date().toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            let content = `THE FREQUENCY - Episode 001: The Loudness War
+My Responses
+${date}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SEGMENT 2: The Analog Sessions
+Question: What's one thing you used to do that had natural constraints?
+Response: ${userData.analog || '(not answered)'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SEGMENT 3: The Digital Revolution
+Question: Which describes your life's waveform?
+Response: ${userData.waveform || '(not answered)'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SEGMENT 5: The Beautiful Mistake
+Question: What quality about yourself do you try to 'fix' that might actually be your sound?
+Response: ${userData.drumRoom || '(not answered)'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SEGMENT 6: The Loop That Ate The Break
+Question: What used to interrupt your loop but doesn't anymore?
+Response: ${userData.break || '(not answered)'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SEGMENT 7: Perfecting Toward What?
+Question: What are you perfecting toward?
+Response: ${userData.vision || '(not answered)'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SEGMENT 8: The Vinyl Return
+Question: What's one frequency you'll tune to this week?
+Response: ${userData.frequency || '(not answered)'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Total Interactions: ${interactionCount}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+© FORTEEN 2026
+THE FREQUENCY • FORTEEN MIND LABS
+www.forteen.in
+
+Privacy: This file was generated locally in your browser.
+No data was transmitted or stored on any server.
+`;
+
+            // Create download
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `the-frequency-my-responses-${Date.now()}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function updateProgress() {
+            const progress = ((currentSegment - 1) / 8) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        // Waveform generation
+        function generateWaveform(id, type) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            const svg = el.closest('svg');
+            const vb = svg.getAttribute('viewBox').split(' ');
+            const w = parseInt(vb[2]), h = parseInt(vb[3]), cy = h / 2;
+            const pts = 100;
+            let path = `M 0,${cy}`;
+            for (let i = 1; i <= pts; i++) {
+                const x = (i / pts) * w;
+                let y;
+                if (type === 'dynamic') {
+                    const b = Math.sin(i * 0.2) * (h * 0.15);
+                    const v1 = Math.sin(i * 0.5) * (h * 0.1);
+                    const v2 = Math.sin(i * 0.1) * (h * 0.08);
+                    const n = (Math.random() - 0.5) * (h * 0.04);
+                    y = cy + b + v1 + v2 + n;
+                } else {
+                    const v = (Math.random() - 0.5) * (h * 0.025);
+                    y = cy + v;
+                }
+                path += ` L ${x},${y}`;
+            }
+            el.setAttribute('d', path);
+        }
+
+        // Interactive handlers
+        function setupInteractions() {
+            // Segment 2: Analog options - UNIQUE SOUND PER CHOICE
+            const analogCards = document.querySelectorAll('#analogOptions .option-card');
+            const analogSounds = [
+                () => audio.playPluck(165),  // Letters - E3
+                () => audio.playPluck(196),  // Photos - G3
+                () => audio.playPluck(220),  // Calls - A3
+                () => audio.playPluck(247),  // Lost - B3
+                () => audio.playPluck(277)   // Bored - C#4
+            ];
+            
+            analogCards.forEach((card, index) => {
+                card.addEventListener('click', function() {
+                    document.querySelectorAll('#analogOptions .option-card').forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                    userData.analog = this.getAttribute('data-option');
+                    document.getElementById('protip1').classList.add('revealed');
+                    document.getElementById('badge1').style.opacity = '1';
+                    interactionCount++;
+                    if (audio.initialized) analogSounds[index]();
+                });
+            });
+
+            // Segment 3: Waveform choice - DIFFERENT SOUNDS
+            const protips2 = {
+                dynamic: "You still have the groove. The question is: how do you protect it?",
+                compressed: "Everything at maximum volume. All the time. No wonder you're exhausted.",
+                clipping: "You're not broken. You're overloaded. The signal is too hot."
+            };
+            document.querySelectorAll('#waveformOptions .option-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    document.querySelectorAll('#waveformOptions .option-card').forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                    const choice = this.getAttribute('data-waveform');
+                    userData.waveform = choice;
+                    document.getElementById('protip2Text').textContent = protips2[choice];
+                    document.getElementById('protip2').classList.add('revealed');
+                    document.getElementById('badge2').style.opacity = '1';
+                    interactionCount++;
+                    // Different sound based on choice
+                    if (audio.initialized) {
+                        if (choice === 'dynamic') audio.playChord(220, 'major'); // Hopeful
+                        else if (choice === 'compressed') audio.playChord(220, 'sus'); // Tense
+                        else audio.playDrumRoll(); // Clipping = drum roll
+                    }
+                });
+            });
+
+            // Segment 5: Drum room input - SOUND ON TYPING
+            let drumRoomTimeout;
+            document.getElementById('drumRoomInput').addEventListener('input', function() {
+                // Blip on each keystroke
+                if (audio.initialized) audio.playBlip(660);
+                
+                // Clear previous timeout
+                clearTimeout(drumRoomTimeout);
+                
+                // Trigger badge/protip after pause in typing
+                drumRoomTimeout = setTimeout(() => {
+                    if (this.value.length > 3) {
+                        userData.drumRoom = this.value;
+                        document.getElementById('protip3').classList.add('revealed');
+                        document.getElementById('badge4').style.opacity = '1';
+                        interactionCount++;
+                        if (audio.initialized) audio.playAscend(); // Melodic sequence
+                    }
+                }, 800);
+            });
+
+            // Segment 6: Break options - UNIQUE SOUND PER CHOICE
+            const breakCards = document.querySelectorAll('#breakOptions .option-card');
+            const breakSounds = [
+                () => audio.playSnare(),     // Walks - snare
+                () => audio.playKick(),      // Weekends - kick
+                () => audio.playTom(110),    // Boredom - low tom
+                () => audio.playTom(165)     // Unproductive - high tom
+            ];
+            
+            breakCards.forEach((card, index) => {
+                card.addEventListener('click', function() {
+                    document.querySelectorAll('#breakOptions .option-card').forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                    userData.break = this.getAttribute('data-break');
+                    document.getElementById('protip4').classList.add('revealed');
+                    document.getElementById('badge5').style.opacity = '1';
+                    interactionCount++;
+                    if (audio.initialized) breakSounds[index]();
+                });
+            });
+
+            // Segment 7: Vision input - SOUND ON TYPING
+            let visionTimeout;
+            document.getElementById('visionInput').addEventListener('input', function() {
+                // Blip on each keystroke
+                if (audio.initialized) audio.playBlip(880);
+                
+                // Clear previous timeout
+                clearTimeout(visionTimeout);
+                
+                // Trigger badge/protip after pause in typing
+                visionTimeout = setTimeout(() => {
+                    if (this.value.length > 3) {
+                        userData.vision = this.value;
+                        document.getElementById('protip5').classList.add('revealed');
+                        document.getElementById('badge6').style.opacity = '1';
+                        interactionCount++;
+                        if (audio.initialized) audio.playCymbal(); // Cymbal for clarity
+                    }
+                }, 800);
+            });
+
+            // Segment 8: Frequency input - SOUND ON TYPING
+            let frequencyTimeout;
+            document.getElementById('frequencyInput').addEventListener('input', function() {
+                // Blip on each keystroke
+                if (audio.initialized) audio.playBlip(1100);
+                
+                // Clear previous timeout
+                clearTimeout(frequencyTimeout);
+                
+                // Trigger badge/protip after pause in typing
+                frequencyTimeout = setTimeout(() => {
+                    if (this.value.length > 3) {
+                        userData.frequency = this.value;
+                        document.getElementById('protip6').classList.add('revealed');
+                        document.getElementById('badge7').style.opacity = '1';
+                        interactionCount++;
+                        document.getElementById('interactionCount').textContent = interactionCount;
+                        if (audio.initialized) audio.playChord(220, 'major'); // Hopeful return
+                    }
+                }, 800);
+            });
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            generateWaveform('wave1', 'dynamic');
+            generateWaveform('wave2', 'compressed');
+            setupInteractions();
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
